@@ -11,7 +11,7 @@
     <string name="search_hint">Search guides</string>
     <string name="guide">Guide</string>
     <string name="map">Map</string>
-    <string name="gallery">Gallery</string>
+    <string name="collection">Collection</string>
     <string name="about">About</string>
 
     <string name="augustus_image_description">Image of Augustus</string>

@@ -6,6 +6,7 @@ import android.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,27 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
     private RecyclerView guideRecycler;
     private GuideAdapter guideAdapter;
     private List<GuideItem> guideItems;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
-        // Initialize the guide items
+        // Initialize views
+        initializeViews();
+        setupGuideItems();
+        setupRecyclerView();
+        setupSearchView();
+        setupBottomNavigation();
+    }
+
+    private void initializeViews() {
+        guideRecycler = findViewById(R.id.guide_recycler);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+    }
+
+    private void setupGuideItems() {
         guideItems = new ArrayList<>();
         guideItems.add(new GuideItem(
                 "Augustus I",
@@ -37,14 +52,15 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
                 "Introduction",
                 "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg"
         ));
+    }
 
-        // Set up the RecyclerView
-        guideRecycler = findViewById(R.id.guide_recycler);
+    private void setupRecyclerView() {
         guideRecycler.setLayoutManager(new LinearLayoutManager(this));
         guideAdapter = new GuideAdapter(guideItems, this);
         guideRecycler.setAdapter(guideAdapter);
+    }
 
-        // Set up the search functionality
+    private void setupSearchView() {
         SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -58,6 +74,28 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
                 guideAdapter.filter(newText);
                 return false;
             }
+        });
+    }
+
+    private void setupBottomNavigation() {
+        bottomNavigationView.setSelectedItemId(R.id.navigation_guide);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_guide) {
+                return true;
+            } else if (itemId == R.id.navigation_map) {
+                // Handle map navigation
+                return true;
+            } else if (itemId == R.id.navigation_collection) {
+                // Handle gallery navigation
+                return true;
+            } else if (itemId == R.id.navigation_about) {
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            }
+            return false;
         });
     }
 

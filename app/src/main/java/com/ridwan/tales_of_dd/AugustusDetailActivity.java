@@ -80,4 +80,5 @@ public class AugustusDetailActivity extends AppCompatActivity {
                     .into(imageView);
         }
     }
+
 }
