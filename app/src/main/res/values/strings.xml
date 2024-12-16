@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Tales_of_DD</string>
+    <string name="explore_dresden_title">Explore Dresden with us!</string>
+    <string name="dresden_description">Discover Dresden\'s landmarks through historical narratives.</string>
+    <string name="meet_guide_button">Meet your Guide</string>
+    <string name="logo_description">Dresden Tour App Logo</string>
+    <string name="landmark_image_description">Dresden Landmark</string>
+
+
+    <string name="our_dresden_guides">Our Dresden Guides</string>
+    <string name="search_hint">Search guides</string>
+    <string name="guide">Guide</string>
+    <string name="map">Map</string>
+    <string name="gallery">Gallery</string>
+    <string name="about">About</string>
+
+    <string name="augustus_image_description">Image of Augustus</string>
+</resources>
