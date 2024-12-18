@@ -87,7 +87,9 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
                 // Handle map navigation
                 return true;
             } else if (itemId == R.id.navigation_collection) {
-                // Handle gallery navigation
+                Intent intent = new Intent(this, CollectionActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
             } else if (itemId == R.id.navigation_about) {
                 Intent intent = new Intent(this, AboutActivity.class);
