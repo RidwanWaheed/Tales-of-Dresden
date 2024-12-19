@@ -1,5 +1,6 @@
 package com.ridwan.tales_of_dd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,6 +24,7 @@ public class AugustusDetailActivity extends AppCompatActivity {
     private RecyclerView landmarksRecycler;
     private ImageButton backButton;
     private MaterialButton guideMeButton;
+    private GuideItem currentGuideItem; // Add this field
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +33,14 @@ public class AugustusDetailActivity extends AppCompatActivity {
 
         // Initialize views
         initializeViews();
-        setupClickListeners();
-        setupLandmarksRecycler();
 
         // Get the GuideItem from the intent
-        GuideItem guideItem = (GuideItem) getIntent().getSerializableExtra("guide_item");
+        currentGuideItem = (GuideItem) getIntent().getSerializableExtra("guide_item");
 
-        if (guideItem != null) {
-            populateViews(guideItem);
+        if (currentGuideItem != null) {
+            populateViews(currentGuideItem);
+            setupClickListeners();
+            setupLandmarksRecycler();
         }
     }
 
@@ -56,7 +58,13 @@ public class AugustusDetailActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish());
 
         guideMeButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Guide feature coming soon!", Toast.LENGTH_SHORT).show();
+            if (currentGuideItem != null) {
+                Intent intent = new Intent(this, MapActivity.class);
+                intent.putExtra("guide_item", currentGuideItem);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Error loading guide information", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -80,5 +88,4 @@ public class AugustusDetailActivity extends AppCompatActivity {
                     .into(imageView);
         }
     }
-
 }
