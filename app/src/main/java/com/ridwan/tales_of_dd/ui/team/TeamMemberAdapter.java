@@ -1,4 +1,4 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.team;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.ridwan.tales_of_dd.R;
 
 import java.util.List;
 

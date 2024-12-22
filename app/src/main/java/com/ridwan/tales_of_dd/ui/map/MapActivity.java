@@ -1,4 +1,4 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.map;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,14 +12,8 @@ import android.Manifest;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +28,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ridwan.tales_of_dd.ui.collection.CollectionActivity;
+import com.ridwan.tales_of_dd.R;
+import com.ridwan.tales_of_dd.ui.about.AboutActivity;
+import com.ridwan.tales_of_dd.ui.guide.GuideActivity;
+import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

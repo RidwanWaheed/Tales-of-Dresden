@@ -1,4 +1,4 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.data.models;
 
 import java.io.Serializable;
 

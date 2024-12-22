@@ -1,10 +1,10 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.collection;
 
-public class TeamMember {
+public class Collection {
     private String name;
     private String imageUrl;
 
-    public TeamMember(String name, String imageUrl) {
+    public Collection(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
     }

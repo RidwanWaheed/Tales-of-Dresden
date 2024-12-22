@@ -1,18 +1,17 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.collection;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.SearchView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ridwan.tales_of_dd.R;
+import com.ridwan.tales_of_dd.ui.about.AboutActivity;
+import com.ridwan.tales_of_dd.ui.guide.GuideActivity;
 
 import java.util.ArrayList;
 import java.util.List;

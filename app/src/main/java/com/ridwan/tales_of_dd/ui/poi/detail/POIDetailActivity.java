@@ -1,17 +1,15 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.poi.detail;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.ridwan.tales_of_dd.R;
+import com.ridwan.tales_of_dd.data.models.PointOfInterest;
 
 import java.util.Locale;
 

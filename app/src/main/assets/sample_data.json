@@ -1,0 +1,82 @@
+{
+  "landmarks": [
+    {
+      "id": 1,
+      "name": "Zwinger Palace",
+      "latitude": 51.0535,
+      "longitude": 13.7374,
+      "description": "A Baroque masterpiece in Dresden",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/00_2386_Dresden_-_Zwinger.jpg",
+      "is_secret": false,
+      "reward": null,
+      "buffer_radius": 50.0
+    },
+    {
+      "id": 2,
+      "name": "Semper Opera",
+      "latitude": 51.0538,
+      "longitude": 13.7352,
+      "description": "A famous opera house",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Dresda_Semperoper.jpg",
+      "is_secret": true,
+      "reward": "Hidden Map",
+      "buffer_radius": 40.0
+    },
+    {
+      "id": 3,
+      "name": "Frauenkirche",
+      "latitude": 51.0519,
+      "longitude": 13.7412,
+      "description": "Reconstructed historic church",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Dresden_Germany_Exterior-of-Frauenkirche-04.jpg",
+      "is_secret": false,
+      "reward": null,
+      "buffer_radius": 60.0
+    }
+  ],
+  "characters": [
+    {
+      "id": 1,
+      "name": "King Augustus",
+      "era": "18th Century",
+      "personality": "Visionary and ambitious",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Architect Müller",
+      "era": "19th Century",
+      "personality": "Creative and detail-oriented",
+      "image_url": "https://upload.wikimedia.org/wikipedia/de/5/5a/Architekt_Heinrich_Müller_1840.jpg"
+    }
+  ],
+  "landmark_character": [
+    { "landmark_id": 1, "character_id": 1 },
+    { "landmark_id": 2, "character_id": 1 },
+    { "landmark_id": 2, "character_id": 2 },
+    { "landmark_id": 3, "character_id": 2 }
+  ],
+  "narratives": [
+    {
+      "id": 1,
+      "character_id": 1,
+      "landmark_id": 1,
+      "narrative_text": "This palace was the centerpiece of my legacy.",
+      "audio_url": "/audio/augustus_zwinger.mp3"
+    },
+    {
+      "id": 2,
+      "character_id": 2,
+      "landmark_id": 2,
+      "narrative_text": "I designed this opera house to inspire awe.",
+      "audio_url": "/audio/muller_semper.mp3"
+    },
+    {
+      "id": 3,
+      "character_id": 2,
+      "landmark_id": 3,
+      "narrative_text": "This church shows how resilience can rebuild.",
+      "audio_url": "/audio/muller_frauen.mp3"
+    }
+  ]
+}
