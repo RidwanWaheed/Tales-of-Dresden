@@ -16,4 +16,9 @@
 
     <string name="augustus_image_description">Image of Augustus</string>
     <string name="back_button_description">Back to Guides</string>
+
+    <string name="landmark_image">My landmarks</string>
+
+
+
 </resources>

@@ -23,6 +23,9 @@ public class Character {
     /** Brief description of character's personality */
     public String personality;
 
+    /** Brief introduction of character's background */
+    public String overview;
+
     /** URL to character's portrait image */
     @SerializedName("image_url")
     @ColumnInfo(name = "image_url")

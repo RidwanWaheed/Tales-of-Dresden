@@ -7,64 +7,93 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ridwan.tales_of_dd.R;
+import com.ridwan.tales_of_dd.data.database.AppDatabase;
+import com.ridwan.tales_of_dd.data.entities.Character;
+import com.ridwan.tales_of_dd.ui.about.AboutActivity;
 import com.ridwan.tales_of_dd.ui.character.detail.AugustusDetailActivity;
 import com.ridwan.tales_of_dd.ui.collection.CollectionActivity;
-import com.ridwan.tales_of_dd.R;
-import com.ridwan.tales_of_dd.ui.about.AboutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity to display a list of guides and handle user interactions.
+ */
 public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnGuideItemClickListener {
 
     private RecyclerView guideRecycler;
     private GuideAdapter guideAdapter;
-    private List<GuideItem> guideItems;
+    private List<GuideItem> guideItems = new ArrayList<>();
     private BottomNavigationView bottomNavigationView;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
-        // Initialize views
+        // Initialize database and views
+        db = AppDatabase.getInstance(this);
         initializeViews();
-        setupGuideItems();
+
+        // Load data and set up UI components
+        loadGuideItemsFromDatabase();
         setupRecyclerView();
         setupSearchView();
         setupBottomNavigation();
     }
 
+    /**
+     * Initializes views in the layout.
+     */
     private void initializeViews() {
         guideRecycler = findViewById(R.id.guide_recycler);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
     }
 
-    private void setupGuideItems() {
-        guideItems = new ArrayList<>();
-        guideItems.add(new GuideItem(
-                "Augustus I",
-                "Introduction",
-                "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg"
-        ));
-        guideItems.add(new GuideItem(
-                "Augustus II",
-                "Introduction",
-                "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg"
-        ));
-        guideItems.add(new GuideItem(
-                "Augustus III",
-                "Introduction",
-                "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg"
-        ));
+    /**
+     * Loads guide items from the database and updates the RecyclerView.
+     */
+    private void loadGuideItemsFromDatabase() {
+        new Thread(() -> {
+            // Fetch characters from the database
+            List<Character> characters = db.characterDao().getAllCharacters();
+
+            // Convert characters to guide items
+            guideItems.clear();
+            for (Character character : characters) {
+                guideItems.add(new GuideItem(
+                        character.id,
+                        character.name,
+                        character.personality,
+                        character.imageUrl
+                ));
+            }
+
+            // Update RecyclerView on the main thread
+            runOnUiThread(() -> {
+                if (guideAdapter != null) {
+                    guideAdapter.updateItems(guideItems);
+                } else {
+                    setupRecyclerView();
+                }
+            });
+        }).start();
     }
 
+    /**
+     * Sets up the RecyclerView with a layout manager and adapter.
+     */
     private void setupRecyclerView() {
         guideRecycler.setLayoutManager(new LinearLayoutManager(this));
         guideAdapter = new GuideAdapter(guideItems, this);
         guideRecycler.setAdapter(guideAdapter);
     }
 
+    /**
+     * Sets up the search functionality to filter guide items.
+     */
     private void setupSearchView() {
         SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -82,30 +111,46 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
         });
     }
 
+    /**
+     * Sets up the bottom navigation bar with listeners for navigation events.
+     */
     private void setupBottomNavigation() {
         bottomNavigationView.setSelectedItemId(R.id.navigation_guide);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_guide) {
+                // Already on the guide screen
                 return true;
             } else if (itemId == R.id.navigation_map) {
                 // Handle map navigation
                 return true;
             } else if (itemId == R.id.navigation_collection) {
-                Intent intent = new Intent(this, CollectionActivity.class);
-                startActivity(intent);
-                finish();
+                navigateToActivity(CollectionActivity.class);
                 return true;
             } else if (itemId == R.id.navigation_about) {
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                finish();
+                navigateToActivity(AboutActivity.class);
                 return true;
             }
             return false;
         });
     }
 
+    /**
+     * Handles navigation to a different activity.
+     *
+     * @param targetActivity The target activity class.
+     */
+    private void navigateToActivity(Class<?> targetActivity) {
+        Intent intent = new Intent(this, targetActivity);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Handles click events on guide items.
+     *
+     * @param guideItem The clicked guide item.
+     */
     @Override
     public void onGuideItemClicked(GuideItem guideItem) {
         Intent intent = new Intent(this, AugustusDetailActivity.class);

@@ -52,6 +52,15 @@ public interface CharacterDao {
     Character getCharacterById(int id);
 
     /**
+     * Retrieves overview of a character by its ID.
+     *
+     * @param id The ID of the character to retrieve.
+     * @return The overview of character entity with the specified ID.
+     */
+    @Query("SELECT overview FROM characters WHERE id = :id")
+    String getOverviewById(int id);
+
+    /**
      * Inserts a single character into the database.
      * If a conflict occurs, the existing record will be replaced.
      *
