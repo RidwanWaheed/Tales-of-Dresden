@@ -1,9 +1,8 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.character.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
+import com.ridwan.tales_of_dd.R;
+import com.ridwan.tales_of_dd.ui.guide.GuideItem;
+import com.ridwan.tales_of_dd.ui.map.MapActivity;
 
 public class AugustusDetailActivity extends AppCompatActivity {
     private TextView titleTextView;

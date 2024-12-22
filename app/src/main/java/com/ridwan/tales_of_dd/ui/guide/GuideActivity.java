@@ -1,4 +1,4 @@
-package com.ridwan.tales_of_dd;
+package com.ridwan.tales_of_dd.ui.guide;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ridwan.tales_of_dd.ui.character.detail.AugustusDetailActivity;
+import com.ridwan.tales_of_dd.ui.collection.CollectionActivity;
+import com.ridwan.tales_of_dd.R;
+import com.ridwan.tales_of_dd.ui.about.AboutActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 

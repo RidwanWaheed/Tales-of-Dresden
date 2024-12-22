@@ -23,23 +23,23 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".POIDetailActivity"
+            android:name=".ui.poi.detail.POIDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.Tales_of_DD.Translucent" />  <!-- Updated theme reference -->
         <activity
-            android:name=".MapActivity"
+            android:name=".ui.map.MapActivity"
             android:exported="true" />
         <activity
-            android:name=".CollectionActivity"
+            android:name=".ui.collection.CollectionActivity"
             android:exported="false" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".ui.about.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".AugustusDetailActivity"
+            android:name=".ui.character.detail.AugustusDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".GuideActivity"
+            android:name=".ui.guide.GuideActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
