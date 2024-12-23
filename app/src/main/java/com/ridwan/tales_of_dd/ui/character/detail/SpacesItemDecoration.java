@@ -1,4 +1,4 @@
-package com.ridwan.tales_of_dd.ui;
+package com.ridwan.tales_of_dd.ui.character.detail;
 
 import android.graphics.Rect;
 import android.view.View;

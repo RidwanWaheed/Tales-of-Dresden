@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +21,6 @@ import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.data.entities.LandmarkCharacter;
-import com.ridwan.tales_of_dd.ui.SpacesItemDecoration;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
 
