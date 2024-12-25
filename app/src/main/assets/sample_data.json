@@ -40,14 +40,16 @@
       "name": "King Augustus",
       "era": "18th Century",
       "personality": "Visionary and ambitious",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg"
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bust_of_augustus.jpg",
+      "overview": "King Augustus, also known as Augustus the Strong, was a ruler of Saxony and Poland in the early 18th century. Renowned for his ambitious vision and patronage of the arts, he transformed Dresden into a cultural and architectural masterpiece. His leadership and charisma left an indelible mark on European history."
     },
     {
       "id": 2,
       "name": "Architect Müller",
       "era": "19th Century",
       "personality": "Creative and detail-oriented",
-      "image_url": "https://upload.wikimedia.org/wikipedia/de/5/5a/Architekt_Heinrich_Müller_1840.jpg"
+      "image_url": "https://upload.wikimedia.org/wikipedia/de/5/5a/Architekt_Heinrich_Müller_1840.jpg",
+      "overview": "Architect Müller was a visionary designer and master craftsman during the Baroque period. He played a significant role in shaping the architectural landscape of Dresden, contributing to iconic landmarks such as the Frauenkirche. His creativity and meticulous attention to detail define his enduring legacy."
     }
   ],
   "landmark_character": [

@@ -51,6 +51,9 @@ public interface LandmarkDao {
     @Query("SELECT * FROM landmarks WHERE id = :id")
     Landmark getLandmarkById(int id);
 
+    @Query("SELECT * FROM landmarks WHERE id IN (:landmarkIds)")
+    List<Landmark> getLandmarksByIds(List<Integer> landmarkIds);
+
     /**
      * Inserts a single landmark into the database.
      * If a conflict occurs, the existing record will be replaced.
