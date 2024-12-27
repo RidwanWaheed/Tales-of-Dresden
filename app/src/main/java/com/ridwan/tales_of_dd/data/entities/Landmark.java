@@ -25,8 +25,13 @@ public class Landmark {
     /** Geographical longitude */
     private float longitude;
 
-    /** Detailed description of the landmark */
+    /** Short description of the landmark */
     private String description;
+
+    /** Detailed description of the landmark */
+    @SerializedName("detailed_description")
+    @ColumnInfo(name = "detailed_description")
+    private String detailedDescription;
 
     /** URL to the landmark's image */
     @SerializedName("image_url")
@@ -49,23 +54,25 @@ public class Landmark {
     /**
      * Constructor for creating a Landmark instance.
      *
-     * @param id           Unique identifier for the landmark.
-     * @param name         Name of the landmark.
-     * @param latitude     Geographical latitude.
-     * @param longitude    Geographical longitude.
-     * @param description  Detailed description of the landmark.
-     * @param imageUrl     URL to the landmark's image.
-     * @param isSecret     Indicates if the landmark is a hidden location.
-     * @param reward       Reward for discovering this landmark.
-     * @param bufferRadius Radius for proximity detection in meters.
+     * @param id                Unique identifier for the landmark.
+     * @param name              Name of the landmark.
+     * @param latitude          Geographical latitude.
+     * @param longitude         Geographical longitude.
+     * @param description       Short description of the landmark.
+     * @param detailedDescription Detailed description of the landmark.
+     * @param imageUrl          URL to the landmark's image.
+     * @param isSecret          Indicates if the landmark is a hidden location.
+     * @param reward            Reward for discovering this landmark.
+     * @param bufferRadius      Radius for proximity detection in meters.
      */
     public Landmark(int id, String name, float latitude, float longitude, String description,
-                    String imageUrl, boolean isSecret, String reward, float bufferRadius) {
+                    String detailedDescription, String imageUrl, boolean isSecret, String reward, float bufferRadius) {
         this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
+        this.detailedDescription = detailedDescription;
         this.imageUrl = imageUrl;
         this.isSecret = isSecret;
         this.reward = reward;
@@ -114,14 +121,24 @@ public class Landmark {
         this.longitude = longitude;
     }
 
-    /** @return Detailed description of the landmark */
+    /** @return Short description of the landmark */
     public String getDescription() {
         return description;
     }
 
-    /** @param description Sets the detailed description of the landmark */
+    /** @param description Sets the short description of the landmark */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /** @return Detailed description of the landmark */
+    public String getDetailedDescription() {
+        return detailedDescription;
+    }
+
+    /** @param detailedDescription Sets the detailed description of the landmark */
+    public void setDetailedDescription(String detailedDescription) {
+        this.detailedDescription = detailedDescription;
     }
 
     /** @return URL to the landmark's image */
