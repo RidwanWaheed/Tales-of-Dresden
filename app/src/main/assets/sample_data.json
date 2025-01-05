@@ -34,6 +34,18 @@
       "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Dresden_Germany_Exterior-of-Frauenkirche-04.jpg",
       "is_secret": false,
       "reward": null,
+      "buffer_radius": 40.0
+    },
+    {
+      "id": 4,
+      "name": "Fritz",
+      "latitude": 51.035833,
+      "longitude": 13.731667,
+      "description": "Reconstructed historic Dorm",
+      "detailed_description": "The Fritz, or Church of Our Lady, is a stunning example of baroque architecture and one of Dresden's most famous landmarks. Originally built in the 18th century, the church was completely destroyed during World War II. After being left in ruins as a war memorial for decades, it was meticulously reconstructed and reopened in 2005. The church's majestic dome, known as the 'Stone Bell,' dominates the city's skyline and offers breathtaking views of Dresden. The Frauenkirche stands as a symbol of reconciliation and hope, attracting visitors from around the world.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Dresden_Germany_Exterior-of-Frauenkirche-04.jpg",
+      "is_secret": false,
+      "reward": null,
       "buffer_radius": 60.0
     }
   ],

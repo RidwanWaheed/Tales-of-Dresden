@@ -28,7 +28,10 @@
             android:theme="@style/Theme.Tales_of_DD.Translucent" />  <!-- Updated theme reference -->
         <activity
             android:name=".ui.map.MapActivity"
-            android:exported="true" />
+            android:launchMode="singleTask"
+            android:exported="false"
+            android:clearTaskOnLaunch="false"
+            android:finishOnTaskLaunch="false" />
         <activity
             android:name=".ui.collection.CollectionActivity"
             android:exported="false" />
