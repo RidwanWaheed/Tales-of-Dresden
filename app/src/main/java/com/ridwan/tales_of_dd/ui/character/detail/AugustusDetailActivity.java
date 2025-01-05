@@ -76,8 +76,10 @@ public class AugustusDetailActivity extends AppCompatActivity {
         guideMeButton.setOnClickListener(v -> {
             if (currentGuideItem != null) {
                 Intent intent = new Intent(this, MapActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("guide_item", currentGuideItem);
                 startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(this, "Error loading guide information", Toast.LENGTH_SHORT).show();
             }
@@ -167,4 +169,5 @@ public class AugustusDetailActivity extends AppCompatActivity {
         SnapHelper snapHelper = new LinearSnapHelper(); // or PagerSnapHelper for pager-like behavior
         snapHelper.attachToRecyclerView(landmarksRecycler);
     }
+
 }
