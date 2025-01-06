@@ -6,12 +6,14 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Entity representing a historical landmark or point of interest.
  * Maps to the 'landmarks' table in the database.
  */
 @Entity(tableName = "landmarks")
-public class Landmark {
+public class Landmark implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
