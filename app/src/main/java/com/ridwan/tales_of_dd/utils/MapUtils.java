@@ -21,7 +21,7 @@ public class MapUtils {
     public static void applyMapStyle(Context context, GoogleMap map) {
         try {
             boolean success = map.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
+                    MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_darkyellow)
             );
 
             if (!success) {
