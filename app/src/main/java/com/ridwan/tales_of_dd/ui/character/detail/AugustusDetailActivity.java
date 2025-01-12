@@ -1,8 +1,11 @@
 package com.ridwan.tales_of_dd.ui.character.detail;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.data.entities.LandmarkCharacter;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
+import com.ridwan.tales_of_dd.utils.LandmarkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,7 @@ public class AugustusDetailActivity extends AppCompatActivity {
         if (currentGuideItem != null) {
             populateViews(currentGuideItem);
             fetchOverviewFromDatabase(currentGuideItem.getId()); // Fetch and display overview dynamically
-            fetchLandmarksFromDatabase(currentGuideItem.getId()); // Fetch landmarks dynamically
+            fetchLandmarks(currentGuideItem.getId()); // Fetch landmarks dynamically
             setupClickListeners();
         } else {
             Toast.makeText(this, "Error: Guide item not found.", Toast.LENGTH_SHORT).show();
@@ -114,32 +118,23 @@ public class AugustusDetailActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void fetchLandmarksFromDatabase(int characterId) {
-        new Thread(() -> {
-            AppDatabase db = AppDatabase.getInstance(this);
-
-            // Step 1: Fetch LandmarkCharacter relationships by character ID
-            List<LandmarkCharacter> landmarkCharacters = db.landmarkCharacterDao()
-                    .getLandmarkCharactersByCharacterId(characterId);
-
-            // Step 2: Extract landmark IDs from LandmarkCharacter relationships
-            List<Integer> landmarkIds = new ArrayList<>();
-            for (LandmarkCharacter relationship : landmarkCharacters) {
-                landmarkIds.add(relationship.landmarkId);
+    private void fetchLandmarks(int characterId) {
+        LandmarkManager.fetchLandmarksByCharacterId(this, characterId, new LandmarkManager.LandmarkFetchCallback() {
+            @Override
+            public void onLandmarksFetched(List<Landmark> fetchedLandmarks) {
+                if (fetchedLandmarks != null && !fetchedLandmarks.isEmpty()) {
+                    setupLandmarksRecycler(fetchedLandmarks);
+                } else {
+                    Toast.makeText(AugustusDetailActivity.this, "No landmarks associated with this character.", Toast.LENGTH_SHORT).show();
+                }
             }
 
-            // Step 3: Fetch Landmark details using the IDs
-            List<Landmark> landmarks = db.landmarkDao().getLandmarksByIds(landmarkIds);
-
-            // Step 4: Update UI on the main thread
-            runOnUiThread(() -> {
-                if (landmarks != null && !landmarks.isEmpty()) {
-                    setupLandmarksRecycler(landmarks);
-                } else {
-                    Toast.makeText(this, "No landmarks associated with this guide.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }).start();
+            @Override
+            public void onError(String message) {
+                Log.e(TAG, message);
+                Toast.makeText(AugustusDetailActivity.this, "Failed to fetch landmarks.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupLandmarksRecycler(List<Landmark> landmarks) {
@@ -148,14 +143,7 @@ public class AugustusDetailActivity extends AppCompatActivity {
         );
 
         // Convert Landmark objects to LandmarkItem objects
-        List<LandmarkItem> landmarkItems = new ArrayList<>();
-        for (Landmark landmark : landmarks) {
-            landmarkItems.add(new LandmarkItem(
-                    landmark.getId(),
-                    landmark.getName(),
-                    landmark.getImageUrl()
-            ));
-        }
+        List<LandmarkItem> landmarkItems = LandmarkManager.convertToLandmarkItems(landmarks);
 
         // Set the adapter
         LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems);

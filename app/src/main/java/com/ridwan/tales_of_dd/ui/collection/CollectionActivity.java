@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.SearchView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.ui.about.AboutActivity;
@@ -14,7 +16,6 @@ import com.ridwan.tales_of_dd.ui.guide.GuideActivity;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
