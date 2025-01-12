@@ -27,7 +27,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        teamMembersRecycler = findViewById(R.id.team_members_recycler);
+        teamMembersRecycler = findViewById(R.id.team_recycler_view);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         setupRecyclerView();
@@ -68,4 +68,7 @@ public class AboutActivity extends AppCompatActivity {
             return false;
         });
     }
+
+
+
 }

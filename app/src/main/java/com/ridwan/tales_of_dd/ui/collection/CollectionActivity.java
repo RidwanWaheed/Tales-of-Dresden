@@ -105,9 +105,10 @@ public class CollectionActivity extends AppCompatActivity {
             if (itemId == R.id.navigation_guide) {
                 intent = new Intent(this, GuideActivity.class);
             } else if (itemId == R.id.navigation_map) {
-                intent = new Intent(this, MapActivity.class);
+                // Fix for map navigation
             } else if (itemId == R.id.navigation_collection) {
-                return true; // Already on collection screen
+                // Already on collection screen
+                return true;
             } else if (itemId == R.id.navigation_about) {
                 intent = new Intent(this, AboutActivity.class);
             }

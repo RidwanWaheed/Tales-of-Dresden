@@ -47,7 +47,9 @@ public class LandmarkManager {
             landmarkItems.add(new LandmarkItem(
                     landmark.getId(),
                     landmark.getName(),
-                    landmark.getImageUrl()
+                    landmark.getImageUrl(),
+                    landmark.getLatitude(),
+                    landmark.getLongitude()
             ));
         }
         return landmarkItems;

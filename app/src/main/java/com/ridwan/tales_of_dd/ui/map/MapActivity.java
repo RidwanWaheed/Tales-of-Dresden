@@ -125,7 +125,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (currentGuideItem != null) {
             Log.d(TAG, "Guide item received: " + currentGuideItem.getTitle());
         } else {
-            Log.e(TAG, "No guide item received.");
+            Log.w(TAG, "No guide item received.");
+            // Optional: Provide default behavior or skip guide-specific features
+            guideText.setVisibility(View.GONE); // Hide the guide section if there's no data
         }
     }
 
@@ -320,10 +322,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         );
 
         // Convert Landmark objects to LandmarkItem objects
-        List<LandmarkItem> landmarkItems = LandmarkManager.convertToLandmarkItems(landmarks);
+        List<LandmarkItem> landmarkItems = new ArrayList<>();
+        for (Landmark landmark : landmarks) {
+            landmarkItems.add(new LandmarkItem(
+                    landmark.getId(),
+                    landmark.getName(),
+                    landmark.getImageUrl(),
+                    landmark.getLatitude(),
+                    landmark.getLongitude()
+            ));
+        }
 
-        // Set the adapter
-        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems);
+        // Set up the adapter with a click listener
+        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems, landmark -> {
+            centerMapOnLandmark(landmark.getLatitude(), landmark.getLongitude());
+        });
+
         landmarksRecycler.setAdapter(landmarksAdapter);
 
         // Add spacing between items
@@ -333,6 +347,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Add SnapHelper for snapping behavior
         SnapHelper snapHelper = new LinearSnapHelper(); // or PagerSnapHelper for pager-like behavior
         snapHelper.attachToRecyclerView(landmarksRecycler);
+    }
+
+    private void centerMapOnLandmark(double latitude, double longitude) {
+        if (googleMap != null) {
+            LatLng position = new LatLng(latitude, longitude);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15f));
+        }
     }
 
     // Configure bottom navigation

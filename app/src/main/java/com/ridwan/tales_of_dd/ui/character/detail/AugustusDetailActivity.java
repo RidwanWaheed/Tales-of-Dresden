@@ -146,7 +146,7 @@ public class AugustusDetailActivity extends AppCompatActivity {
         List<LandmarkItem> landmarkItems = LandmarkManager.convertToLandmarkItems(landmarks);
 
         // Set the adapter
-        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems);
+        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems, null);
         landmarksRecycler.setAdapter(landmarksAdapter);
 
         // Add spacing between items
