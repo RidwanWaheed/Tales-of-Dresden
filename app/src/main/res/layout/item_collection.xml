@@ -10,24 +10,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/collection_image"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_camera_placeholder"/>
-
+        <!-- Landmark Name -->
         <TextView
             android:id="@+id/collection_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="8dp"
-            android:text="collection"
+            android:text="Collection Name"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <!-- Photos Grid -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photos_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="4dp"
+            android:paddingBottom="4dp"/>
+
+        <!-- No Photos Message (Initially Gone) -->
+        <TextView
+            android:id="@+id/no_photos_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="No photos yet"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

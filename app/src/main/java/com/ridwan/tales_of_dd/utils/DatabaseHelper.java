@@ -80,4 +80,22 @@ public class DatabaseHelper {
             return null;
         }
     }
+
+    /**
+     * Retrieves a Landmark by its name.
+     *
+     * @param context the application context
+     * @param name the name of the landmark
+     * @return the Landmark object, or null if not found
+     */
+    public static Landmark getLandmarkByName(Context context, String name) {
+        try {
+            AppDatabase db = AppDatabase.getInstance(context);
+            return db.landmarkDao().getLandmarkByName(name);
+        } catch (Exception e) {
+            Log.e(TAG, "Error fetching landmark by name", e);
+            return null;
+        }
+    }
+
 }
