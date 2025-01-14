@@ -38,7 +38,7 @@
             android:name=".ui.about.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.character.detail.AugustusDetailActivity"
+            android:name=".ui.character.detail.GuideDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.guide.GuideActivity"

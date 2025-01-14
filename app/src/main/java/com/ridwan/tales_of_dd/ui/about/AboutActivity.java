@@ -36,8 +36,8 @@ public class AboutActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         List<TeamMember> teamMembers = new ArrayList<>();
-        teamMembers.add(new TeamMember("Marcel Siedlich", "url_to_marcel_image"));
         teamMembers.add(new TeamMember("Waheed Ridwan", "url_to_waheed_image"));
+        teamMembers.add(new TeamMember("Marcel Siedlich", "url_to_marcel_image"));
         teamMembers.add(new TeamMember("Keying Fan", "url_to_keying_image"));
 
         adapter = new TeamMemberAdapter(teamMembers);

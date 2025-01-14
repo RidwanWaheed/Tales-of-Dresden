@@ -11,7 +11,7 @@ import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.ui.about.AboutActivity;
-import com.ridwan.tales_of_dd.ui.character.detail.AugustusDetailActivity;
+import com.ridwan.tales_of_dd.ui.character.detail.GuideDetailActivity;
 import com.ridwan.tales_of_dd.ui.collection.CollectionActivity;
 
 import java.util.ArrayList;
@@ -153,7 +153,7 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
      */
     @Override
     public void onGuideItemClicked(GuideItem guideItem) {
-        Intent intent = new Intent(this, AugustusDetailActivity.class);
+        Intent intent = new Intent(this, GuideDetailActivity.class);
         intent.putExtra("guide_item", guideItem);
         startActivity(intent);
     }

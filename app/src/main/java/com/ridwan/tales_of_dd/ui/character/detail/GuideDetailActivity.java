@@ -23,15 +23,13 @@ import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
-import com.ridwan.tales_of_dd.data.entities.LandmarkCharacter;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
 import com.ridwan.tales_of_dd.utils.LandmarkManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AugustusDetailActivity extends AppCompatActivity {
+public class GuideDetailActivity extends AppCompatActivity {
     private TextView titleTextView;
     private TextView briefIntroView;
     private TextView overviewText;
@@ -125,14 +123,14 @@ public class AugustusDetailActivity extends AppCompatActivity {
                 if (fetchedLandmarks != null && !fetchedLandmarks.isEmpty()) {
                     setupLandmarksRecycler(fetchedLandmarks);
                 } else {
-                    Toast.makeText(AugustusDetailActivity.this, "No landmarks associated with this character.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GuideDetailActivity.this, "No landmarks associated with this character.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onError(String message) {
                 Log.e(TAG, message);
-                Toast.makeText(AugustusDetailActivity.this, "Failed to fetch landmarks.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GuideDetailActivity.this, "Failed to fetch landmarks.", Toast.LENGTH_SHORT).show();
             }
         });
     }
