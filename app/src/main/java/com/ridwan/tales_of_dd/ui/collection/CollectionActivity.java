@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,7 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.ui.about.AboutActivity;
 import com.ridwan.tales_of_dd.ui.guide.GuideActivity;
+import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
+import com.ridwan.tales_of_dd.utils.GuidePreferences;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,29 +99,56 @@ public class CollectionActivity extends AppCompatActivity {
         }
     }
 
+    // Navigation Methods
     private void setupBottomNavigation() {
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.navigation_collection);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            Intent intent = null;
 
-            if (itemId == R.id.navigation_guide) {
-                intent = new Intent(this, GuideActivity.class);
-            } else if (itemId == R.id.navigation_map) {
-                // Fix for map navigation
-            } else if (itemId == R.id.navigation_collection) {
-                // Already on collection screen
+            if (itemId == R.id.navigation_collection) {
+                // Already on About page
                 return true;
-            } else if (itemId == R.id.navigation_about) {
-                intent = new Intent(this, AboutActivity.class);
             }
 
-            if (intent != null) {
-                startActivity(intent);
+            // Handle navigation based on selected item
+            if (itemId == R.id.navigation_map) {
+                handleMapNavigation();
+            } else if (itemId == R.id.navigation_guide) {
+                startActivity(new Intent(this, GuideActivity.class));
+                finish();
+            } else if (itemId == R.id.navigation_about) {
+                startActivity(new Intent(this, AboutActivity.class));
                 finish();
             }
+
             return true;
         });
+    }
+
+    private void handleMapNavigation() {
+        if (!GuidePreferences.isGuideSelected(this)) {
+            // No guide selected, show message and redirect to guide selection
+            Toast.makeText(this,
+                    "Please select a guide to use the map",
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, GuideActivity.class);
+            startActivity(intent);
+        } else {
+            // Guide already selected, proceed to map
+            GuideItem currentGuide = GuidePreferences.getCurrentGuide(this);
+            Intent mapIntent = new Intent(this, MapActivity.class);
+            mapIntent.putExtra("guide_item", currentGuide);
+            startActivity(mapIntent);
+        }
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Optional: Handle back press if needed
+        super.onBackPressed();
     }
 
     private void setupSearchView() {
