@@ -55,6 +55,15 @@ public interface LandmarkDao {
     List<Landmark> getLandmarksByIds(List<Integer> landmarkIds);
 
     /**
+     * Retrieves a specific landmark by its name.
+     *
+     * @param name The name of the landmark to retrieve.
+     * @return The `Landmark` entity with the specified name.
+     */
+    @Query("SELECT * FROM landmarks WHERE name = :name")
+    Landmark getLandmarkByName(String name);
+
+    /**
      * Inserts a single landmark into the database.
      * If a conflict occurs, the existing record will be replaced.
      *

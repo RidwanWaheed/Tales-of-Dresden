@@ -1,8 +1,11 @@
 package com.ridwan.tales_of_dd.ui.character.detail;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,14 +23,14 @@ import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
-import com.ridwan.tales_of_dd.data.entities.LandmarkCharacter;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
+import com.ridwan.tales_of_dd.utils.GuidePreferences;
+import com.ridwan.tales_of_dd.utils.LandmarkManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AugustusDetailActivity extends AppCompatActivity {
+public class GuideDetailActivity extends AppCompatActivity {
     private TextView titleTextView;
     private TextView briefIntroView;
     private TextView overviewText;
@@ -36,7 +39,6 @@ public class AugustusDetailActivity extends AppCompatActivity {
     private ImageButton backButton;
     private MaterialButton guideMeButton;
     private GuideItem currentGuideItem;
-    private LandmarksAdapter landmarksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class AugustusDetailActivity extends AppCompatActivity {
         if (currentGuideItem != null) {
             populateViews(currentGuideItem);
             fetchOverviewFromDatabase(currentGuideItem.getId()); // Fetch and display overview dynamically
-            fetchLandmarksFromDatabase(currentGuideItem.getId()); // Fetch landmarks dynamically
+            fetchLandmarks(currentGuideItem.getId()); // Fetch landmarks dynamically
             setupClickListeners();
         } else {
             Toast.makeText(this, "Error: Guide item not found.", Toast.LENGTH_SHORT).show();
@@ -75,6 +77,9 @@ public class AugustusDetailActivity extends AppCompatActivity {
 
         guideMeButton.setOnClickListener(v -> {
             if (currentGuideItem != null) {
+                // Save guide selection when "Guide Me" is clicked
+                GuidePreferences.setGuideSelected(this, true, currentGuideItem);
+
                 Intent intent = new Intent(this, MapActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("guide_item", currentGuideItem);
@@ -108,38 +113,29 @@ public class AugustusDetailActivity extends AppCompatActivity {
                 if (character != null && !TextUtils.isEmpty(character.overview)) {
                     overviewText.setText(character.overview);
                 } else {
-                    overviewText.setText("Overview not available.");
+                    overviewText.setText(getString(R.string.overview_not_available));
                 }
             });
         }).start();
     }
 
-    private void fetchLandmarksFromDatabase(int characterId) {
-        new Thread(() -> {
-            AppDatabase db = AppDatabase.getInstance(this);
-
-            // Step 1: Fetch LandmarkCharacter relationships by character ID
-            List<LandmarkCharacter> landmarkCharacters = db.landmarkCharacterDao()
-                    .getLandmarkCharactersByCharacterId(characterId);
-
-            // Step 2: Extract landmark IDs from LandmarkCharacter relationships
-            List<Integer> landmarkIds = new ArrayList<>();
-            for (LandmarkCharacter relationship : landmarkCharacters) {
-                landmarkIds.add(relationship.landmarkId);
+    private void fetchLandmarks(int characterId) {
+        LandmarkManager.fetchLandmarksByCharacterId(this, characterId, new LandmarkManager.LandmarkFetchCallback() {
+            @Override
+            public void onLandmarksFetched(List<Landmark> fetchedLandmarks) {
+                if (fetchedLandmarks != null && !fetchedLandmarks.isEmpty()) {
+                    setupLandmarksRecycler(fetchedLandmarks);
+                } else {
+                    Toast.makeText(GuideDetailActivity.this, "No landmarks associated with this character.", Toast.LENGTH_SHORT).show();
+                }
             }
 
-            // Step 3: Fetch Landmark details using the IDs
-            List<Landmark> landmarks = db.landmarkDao().getLandmarksByIds(landmarkIds);
-
-            // Step 4: Update UI on the main thread
-            runOnUiThread(() -> {
-                if (landmarks != null && !landmarks.isEmpty()) {
-                    setupLandmarksRecycler(landmarks);
-                } else {
-                    Toast.makeText(this, "No landmarks associated with this guide.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }).start();
+            @Override
+            public void onError(String message) {
+                Log.e(TAG, message);
+                Toast.makeText(GuideDetailActivity.this, "Failed to fetch landmarks.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupLandmarksRecycler(List<Landmark> landmarks) {
@@ -148,17 +144,10 @@ public class AugustusDetailActivity extends AppCompatActivity {
         );
 
         // Convert Landmark objects to LandmarkItem objects
-        List<LandmarkItem> landmarkItems = new ArrayList<>();
-        for (Landmark landmark : landmarks) {
-            landmarkItems.add(new LandmarkItem(
-                    landmark.getId(),
-                    landmark.getName(),
-                    landmark.getImageUrl()
-            ));
-        }
+        List<LandmarkItem> landmarkItems = LandmarkManager.convertToLandmarkItems(landmarks);
 
         // Set the adapter
-        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems);
+        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems, null);
         landmarksRecycler.setAdapter(landmarksAdapter);
 
         // Add spacing between items

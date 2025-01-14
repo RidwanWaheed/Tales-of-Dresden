@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,14 +39,19 @@ import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.data.entities.LandmarkCharacter;
 import com.ridwan.tales_of_dd.data.models.PointOfInterest;
 import com.ridwan.tales_of_dd.ui.about.AboutActivity;
+import com.ridwan.tales_of_dd.ui.character.detail.LandmarkItem;
+import com.ridwan.tales_of_dd.ui.character.detail.LandmarksAdapter;
+import com.ridwan.tales_of_dd.ui.character.detail.SpacesItemDecoration;
 import com.ridwan.tales_of_dd.ui.collection.CollectionActivity;
 import com.ridwan.tales_of_dd.ui.guide.GuideActivity;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.poi.detail.POIDetailActivity;
 import com.ridwan.tales_of_dd.utils.DatabaseHelper;
+import com.ridwan.tales_of_dd.utils.LandmarkManager;
 import com.ridwan.tales_of_dd.utils.LocationManager;
 import com.ridwan.tales_of_dd.utils.MapUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, ProximityManager.NarrativeListener {
@@ -52,7 +60,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     // UI elements
     private GoogleMap googleMap;
-    private RecyclerView categoriesRecycler;
+    private RecyclerView landmarksRecycler;
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton locationButton;
     private TextView guideText;
@@ -78,7 +86,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Setup and load the map
         initializeMap();
         setupGuideInfo();
-        setupCategoriesRecycler();
+        fetchLandmarksFromDatabase(currentGuideItem.getId());;
         setupBottomNavigation();
         setupLocationButton();
 
@@ -103,7 +111,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     // ------------------------ Initialization Methods ------------------------
 
     private void initializeViews() {
-        categoriesRecycler = findViewById(R.id.categories_recycler);
+        landmarksRecycler = findViewById(R.id.landmarks_recycler);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         locationButton = findViewById(R.id.fab_location);
         guideText = findViewById(R.id.guide_text);
@@ -116,7 +124,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (currentGuideItem != null) {
             Log.d(TAG, "Guide item received: " + currentGuideItem.getTitle());
         } else {
-            Log.e(TAG, "No guide item received.");
+            Log.w(TAG, "No guide item received.");
+            // Optional: Provide default behavior or skip guide-specific features
+            guideText.setVisibility(View.GONE); // Hide the guide section if there's no data
         }
     }
 
@@ -286,8 +296,63 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     // ------------------------ Navigation and Recycler Setup ------------------------
 
-    private void setupCategoriesRecycler() {
-        categoriesRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    private void fetchLandmarksFromDatabase(int characterId) {
+        LandmarkManager.fetchLandmarksByCharacterId(this, characterId, new LandmarkManager.LandmarkFetchCallback() {
+            @Override
+            public void onLandmarksFetched(List<Landmark> fetchedLandmarks) {
+                if (fetchedLandmarks != null && !fetchedLandmarks.isEmpty()) {
+                    setupLandmarksRecycler(fetchedLandmarks);
+                } else {
+                    Toast.makeText(MapActivity.this, "No landmarks associated with this guide.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                Log.e(TAG, message);
+                Toast.makeText(MapActivity.this, "Failed to fetch landmarks.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupLandmarksRecycler(List<Landmark> landmarks) {
+        landmarksRecycler.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        );
+
+        // Convert Landmark objects to LandmarkItem objects
+        List<LandmarkItem> landmarkItems = new ArrayList<>();
+        for (Landmark landmark : landmarks) {
+            landmarkItems.add(new LandmarkItem(
+                    landmark.getId(),
+                    landmark.getName(),
+                    landmark.getImageUrl(),
+                    landmark.getLatitude(),
+                    landmark.getLongitude()
+            ));
+        }
+
+        // Set up the adapter with a click listener
+        LandmarksAdapter landmarksAdapter = new LandmarksAdapter(landmarkItems, landmark -> {
+            centerMapOnLandmark(landmark.getLatitude(), landmark.getLongitude());
+        });
+
+        landmarksRecycler.setAdapter(landmarksAdapter);
+
+        // Add spacing between items
+        int spacing = getResources().getDimensionPixelSize(R.dimen.landmark_item_spacing);
+        landmarksRecycler.addItemDecoration(new SpacesItemDecoration(spacing));
+
+        // Add SnapHelper for snapping behavior
+        SnapHelper snapHelper = new LinearSnapHelper(); // or PagerSnapHelper for pager-like behavior
+        snapHelper.attachToRecyclerView(landmarksRecycler);
+    }
+
+    private void centerMapOnLandmark(double latitude, double longitude) {
+        if (googleMap != null) {
+            LatLng position = new LatLng(latitude, longitude);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15f));
+        }
     }
 
     // Configure bottom navigation

@@ -23,9 +23,15 @@ import java.util.List;
 
 public class LandmarksAdapter extends RecyclerView.Adapter<LandmarksAdapter.LandmarkViewHolder> {
     private final List<LandmarkItem> landmarks;
+    private final OnLandmarkClickListener listener;
 
-    public LandmarksAdapter(List<LandmarkItem> landmarks) {
+    public interface OnLandmarkClickListener {
+        void onLandmarkClick(LandmarkItem landmarkItem);
+    }
+
+    public LandmarksAdapter(List<LandmarkItem> landmarks, OnLandmarkClickListener listener) {
         this.landmarks = landmarks;
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,7 +44,7 @@ public class LandmarksAdapter extends RecyclerView.Adapter<LandmarksAdapter.Land
     @Override
     public void onBindViewHolder(@NonNull LandmarkViewHolder holder, int position) {
         LandmarkItem item = landmarks.get(position);
-        holder.bind(item);
+        holder.bind(item, listener);
     }
 
     @Override
@@ -56,7 +62,7 @@ public class LandmarksAdapter extends RecyclerView.Adapter<LandmarksAdapter.Land
             nameView = itemView.findViewById(R.id.landmark_name);
         }
 
-        public void bind(LandmarkItem item) {
+        public void bind(LandmarkItem item, OnLandmarkClickListener listener) {
             nameView.setText(item.getName());
 
             // Load image with Glide
@@ -81,6 +87,13 @@ public class LandmarksAdapter extends RecyclerView.Adapter<LandmarksAdapter.Land
             } else {
                 imageView.setImageResource(R.drawable.ic_landmark_placeholder);
             }
+
+            // Set click listener
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onLandmarkClick(item);
+                }
+            });
         }
     }
 }

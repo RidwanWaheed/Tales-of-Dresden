@@ -84,21 +84,27 @@
         android:background="#333333"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation">
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Title for Featured Landmarks -->
+        <TextView
+            android:id="@+id/landmarks_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Featured Landmarks"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- RecyclerView for Featured Landmarks -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categories_recycler"
+            android:id="@+id/landmarks_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-
-        <View
-            android:layout_width="60dp"
-            android:layout_height="4dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:alpha="0.3"
-            android:background="@android:color/white" />
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -118,10 +124,11 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bottom_nav_background"
+        android:background="@color/gray"
         app:itemIconTint="@color/bottom_nav_icon_color"
         app:itemTextColor="@color/bottom_nav_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"
+        android:transitionName="bottom_navigation"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

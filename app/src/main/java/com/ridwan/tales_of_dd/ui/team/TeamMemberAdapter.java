@@ -55,6 +55,7 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Te
             Glide.with(itemView.getContext())
                     .load(member.getImageUrl())
                     .centerCrop()
+                    .placeholder(R.drawable.carto)
                     .into(profileImage);
         }
     }

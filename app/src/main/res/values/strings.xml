@@ -19,6 +19,5 @@
 
     <string name="landmark_image">My landmarks</string>
 
-
-
+    <string name="overview_not_available">Overview not available</string>
 </resources>

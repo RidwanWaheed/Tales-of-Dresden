@@ -3,6 +3,8 @@ package com.ridwan.tales_of_dd.ui.guide;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +13,10 @@ import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.ui.about.AboutActivity;
-import com.ridwan.tales_of_dd.ui.character.detail.AugustusDetailActivity;
+import com.ridwan.tales_of_dd.ui.character.detail.GuideDetailActivity;
 import com.ridwan.tales_of_dd.ui.collection.CollectionActivity;
+import com.ridwan.tales_of_dd.ui.map.MapActivity;
+import com.ridwan.tales_of_dd.utils.GuidePreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,25 +118,56 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
     /**
      * Sets up the bottom navigation bar with listeners for navigation events.
      */
+// Navigation Methods
     private void setupBottomNavigation() {
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.navigation_guide);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+
             if (itemId == R.id.navigation_guide) {
-                // Already on the guide screen
-                return true;
-            } else if (itemId == R.id.navigation_map) {
-                // Handle map navigation
-                return true;
-            } else if (itemId == R.id.navigation_collection) {
-                navigateToActivity(CollectionActivity.class);
-                return true;
-            } else if (itemId == R.id.navigation_about) {
-                navigateToActivity(AboutActivity.class);
+                // Already on About page
                 return true;
             }
-            return false;
+
+            // Handle navigation based on selected item
+            if (itemId == R.id.navigation_map) {
+                handleMapNavigation();
+            } else if (itemId == R.id.navigation_collection) {
+                startActivity(new Intent(this, CollectionActivity.class));
+                finish();
+            } else if (itemId == R.id.navigation_about) {
+                startActivity(new Intent(this, AboutActivity.class));
+                finish();
+            }
+
+            return true;
         });
+    }
+
+    private void handleMapNavigation() {
+        if (!GuidePreferences.isGuideSelected(this)) {
+            // No guide selected, show message and redirect to guide selection
+            Toast.makeText(this,
+                    "Please select a guide to use the map",
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, GuideActivity.class);
+            startActivity(intent);
+        } else {
+            // Guide already selected, proceed to map
+            GuideItem currentGuide = GuidePreferences.getCurrentGuide(this);
+            Intent mapIntent = new Intent(this, MapActivity.class);
+            mapIntent.putExtra("guide_item", currentGuide);
+            startActivity(mapIntent);
+        }
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Optional: Handle back press if needed
+        super.onBackPressed();
     }
 
     /**
@@ -153,8 +188,9 @@ public class GuideActivity extends AppCompatActivity implements GuideAdapter.OnG
      */
     @Override
     public void onGuideItemClicked(GuideItem guideItem) {
-        Intent intent = new Intent(this, AugustusDetailActivity.class);
+        Intent intent = new Intent(this, GuideDetailActivity.class);
         intent.putExtra("guide_item", guideItem);
         startActivity(intent);
     }
+
 }
