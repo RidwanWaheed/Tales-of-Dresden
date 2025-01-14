@@ -204,19 +204,51 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void showLandmarkDetails(Landmark landmark) {
+        if (landmark == null) {
+            Log.e("MapActivity", "Landmark is null, cannot show details");
+            return;
+        }
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
                 float[] results = new float[1];
+                float distanceInKm = 0.0f; // Default distance
                 if (location != null) {
-                    Location.distanceBetween(location.getLatitude(), location.getLongitude(),
-                            landmark.getLatitude(), landmark.getLongitude(), results);
+                    Location.distanceBetween(
+                            location.getLatitude(),
+                            location.getLongitude(),
+                            landmark.getLatitude(),
+                            landmark.getLongitude(),
+                            results
+                    );
+                    distanceInKm = results[0] / 1000; // Convert distance to kilometers
                 }
+
+                // Pass Landmark, distance, and GuideItem to POIDetailActivity
                 Intent intent = new Intent(this, POIDetailActivity.class);
                 intent.putExtra("poi", new PointOfInterest(
-                        landmark.getName(), landmark.getDescription(),
-                        landmark.getImageUrl(), results[0] / 1000, landmark.getDetailedDescription()));
+                        landmark.getName(),
+                        landmark.getDescription(),
+                        landmark.getImageUrl(),
+                        distanceInKm,
+                        landmark.getDetailedDescription()
+                ));
+                intent.putExtra("guide_item", currentGuideItem); // Pass the currentGuideItem
                 startActivity(intent);
             });
+        } else {
+            Log.e("MapActivity", "Location permission not granted, cannot get user location");
+            // Pass Landmark and GuideItem with a default distance (0.0 km)
+            Intent intent = new Intent(this, POIDetailActivity.class);
+            intent.putExtra("poi", new PointOfInterest(
+                    landmark.getName(),
+                    landmark.getDescription(),
+                    landmark.getImageUrl(),
+                    0.0f,
+                    landmark.getDetailedDescription()
+            ));
+            intent.putExtra("guide_item", currentGuideItem); // Pass the currentGuideItem
+            startActivity(intent);
         }
     }
 
