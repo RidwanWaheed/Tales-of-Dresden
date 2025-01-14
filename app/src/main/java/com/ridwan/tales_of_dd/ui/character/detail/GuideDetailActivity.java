@@ -39,7 +39,6 @@ public class GuideDetailActivity extends AppCompatActivity {
     private ImageButton backButton;
     private MaterialButton guideMeButton;
     private GuideItem currentGuideItem;
-    private LandmarksAdapter landmarksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public class GuideDetailActivity extends AppCompatActivity {
                 if (character != null && !TextUtils.isEmpty(character.overview)) {
                     overviewText.setText(character.overview);
                 } else {
-                    overviewText.setText("Overview not available.");
+                    overviewText.setText(getString(R.string.overview_not_available));
                 }
             });
         }).start();
