@@ -25,6 +25,7 @@ import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
 import com.ridwan.tales_of_dd.ui.map.MapActivity;
+import com.ridwan.tales_of_dd.utils.GuidePreferences;
 import com.ridwan.tales_of_dd.utils.LandmarkManager;
 
 import java.util.List;
@@ -77,6 +78,9 @@ public class GuideDetailActivity extends AppCompatActivity {
 
         guideMeButton.setOnClickListener(v -> {
             if (currentGuideItem != null) {
+                // Save guide selection when "Guide Me" is clicked
+                GuidePreferences.setGuideSelected(this, true, currentGuideItem);
+
                 Intent intent = new Intent(this, MapActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("guide_item", currentGuideItem);
