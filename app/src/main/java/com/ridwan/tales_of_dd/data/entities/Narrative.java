@@ -3,6 +3,7 @@ package com.ridwan.tales_of_dd.data.entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,6 +25,10 @@ import com.google.gson.annotations.SerializedName;
                         childColumns = "landmark_id",
                         onDelete = ForeignKey.CASCADE
                 )
+        },
+        indices = {
+                @Index(value = "character_id"),
+                @Index(value = "landmark_id")
         })
 public class Narrative {
     @PrimaryKey

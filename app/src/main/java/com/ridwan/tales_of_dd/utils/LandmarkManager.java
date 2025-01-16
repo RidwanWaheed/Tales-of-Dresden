@@ -10,7 +10,7 @@ import com.ridwan.tales_of_dd.ui.character.detail.LandmarkItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LandmarkManager {
+public class   LandmarkManager {
 
     public interface LandmarkFetchCallback {
         void onLandmarksFetched(List<Landmark> landmarks);

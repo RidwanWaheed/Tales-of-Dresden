@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -19,12 +20,12 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
+import com.ridwan.tales_of_dd.HomeActivity;
 import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.entities.Character;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
-import com.ridwan.tales_of_dd.ui.map.MapActivity;
 import com.ridwan.tales_of_dd.utils.GuidePreferences;
 import com.ridwan.tales_of_dd.utils.LandmarkManager;
 
@@ -60,6 +61,8 @@ public class GuideDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Error: Guide item not found.", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        setupBackPressedCallback();
     }
 
     private void initializeViews() {
@@ -73,20 +76,37 @@ public class GuideDetailActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        backButton.setOnClickListener(v -> finish());
+        backButton.setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        });
 
         guideMeButton.setOnClickListener(v -> {
             if (currentGuideItem != null) {
                 // Save guide selection when "Guide Me" is clicked
                 GuidePreferences.setGuideSelected(this, true, currentGuideItem);
 
-                Intent intent = new Intent(this, MapActivity.class);
+                // Create intent for HomeActivity instead of MapActivity
+                Intent intent = new Intent(this, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                // Add extras to indicate we want to show the map fragment
+                intent.putExtra("selected_tab", "map");
                 intent.putExtra("guide_item", currentGuideItem);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
             } else {
                 Toast.makeText(this, "Error loading guide information", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupBackPressedCallback() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }

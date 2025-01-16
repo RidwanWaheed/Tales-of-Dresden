@@ -20,4 +20,16 @@
     <string name="landmark_image">My landmarks</string>
 
     <string name="overview_not_available">Overview not available</string>
+
+    <!-- About -->
+    <string name="about_this_project">About This Project</string>
+    <string name="project_description">This project is part of the Mobile Cartography course at the Technical University of Dresden, developed under the International Masters in Cartography program. Supervised by Prof. Eva, the project explores innovative cartographic design for mobile applications.</string>
+    <string name="meet_the_team">Meet the Team</string>
+    <string name="footer_text">© 2025 Mobile Cartography Team</string>
+
+    <string name="landmark_not_found">Landmark details not found in database.</string>
+    <string name="details_not_available">Details not available.</string>
+
+    <string name="photo_description">Full screen photo</string>
+
 </resources>

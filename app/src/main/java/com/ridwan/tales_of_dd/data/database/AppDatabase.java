@@ -23,7 +23,7 @@ import com.ridwan.tales_of_dd.data.entities.Narrative;
         Character.class,
         LandmarkCharacter.class,
         Narrative.class,
-}, version = 1)
+}, version = 2)
 @TypeConverters({DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "tales_dd_database.db";

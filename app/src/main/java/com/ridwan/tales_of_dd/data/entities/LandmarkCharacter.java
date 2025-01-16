@@ -2,6 +2,8 @@ package com.ridwan.tales_of_dd.data.entities;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -17,8 +19,9 @@ import com.google.gson.annotations.SerializedName;
                         childColumns = "landmarkId"),
                 @ForeignKey(entity = Character.class,
                         parentColumns = "id",
-                        childColumns = "characterId")
-        })
+                        childColumns = "characterId"),
+        },
+        indices = @Index(value = "characterId"))
 public class LandmarkCharacter {
     /** ID of the associated landmark */
     @SerializedName("landmark_id")

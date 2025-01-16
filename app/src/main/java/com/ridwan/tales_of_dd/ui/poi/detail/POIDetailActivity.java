@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -37,7 +38,6 @@ import java.util.Locale;
 public class POIDetailActivity extends AppCompatActivity implements ProximityManager.NarrativeListener {
 
     // Constants
-    private static final String TAG = "POIDetailActivity";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final float ALLOWED_DISTANCE_METERS = 30.0f;
 
@@ -54,7 +54,6 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
     // Location and Proximity
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
-    private ProximityManager proximityManager;
     private Landmark currentLandmark;
     private float currentDistance = Float.MAX_VALUE;  // Track current distance
 
@@ -92,12 +91,12 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
 
     private void setupLocationServices() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        proximityManager = new ProximityManager();
+        ProximityManager proximityManager = new ProximityManager();
         proximityManager.setNarrativeListener(this);
 
         locationCallback = new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
+            public void onLocationResult(@NonNull LocationResult locationResult) {
                 if (locationResult.getLastLocation() != null && currentLandmark != null) {
                     checkProximityAndUpdateUI(locationResult.getLastLocation(), currentLandmark);
                 }
@@ -108,6 +107,13 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
     private void setupClickListeners() {
         backButton.setOnClickListener(v -> finish());
         cameraButton.setOnClickListener(v -> dispatchTakePictureIntent());
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void handleIntentData() {
@@ -201,7 +207,6 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
         dispatchTakePictureIntent();
     }
 
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -221,7 +226,6 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
             }
         }
     }
-
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());

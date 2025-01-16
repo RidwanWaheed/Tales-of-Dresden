@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ridwan.tales_of_dd.data.database.AppDatabase;
 import com.ridwan.tales_of_dd.data.database.DatabaseInitializer;
-import com.ridwan.tales_of_dd.ui.guide.GuideActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,13 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Button click event
         Button meetGuideButton = findViewById(R.id.meetGuideButton);
-        meetGuideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to the next screen
-                Intent intent = new Intent(MainActivity.this, GuideActivity.class);
-                startActivity(intent);
-            }
+        meetGuideButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish(); // Optional: if you don't want users to come back to the welcome screen
         });
     }
 }
