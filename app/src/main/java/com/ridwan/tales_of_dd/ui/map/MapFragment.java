@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +43,8 @@ import com.ridwan.tales_of_dd.data.models.PointOfInterest;
 import com.ridwan.tales_of_dd.ui.character.detail.LandmarkItem;
 import com.ridwan.tales_of_dd.ui.character.detail.LandmarksAdapter;
 import com.ridwan.tales_of_dd.ui.character.detail.SpacesItemDecoration;
-import com.ridwan.tales_of_dd.ui.poi.detail.POIDetailActivity;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
+import com.ridwan.tales_of_dd.ui.poi.detail.POIDetailActivity;
 import com.ridwan.tales_of_dd.utils.DatabaseHelper;
 import com.ridwan.tales_of_dd.utils.LandmarkManager;
 import com.ridwan.tales_of_dd.utils.LocationManager;
@@ -155,17 +154,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
         guideText = rootView.findViewById(R.id.guide_text);
     }
 
-    private void initializeMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
-    }
-
-
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
 
         // Apply map styling and center on Dresden
@@ -230,13 +220,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
     private void setupCustomInfoWindow() {
         googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
-            public View getInfoWindow(Marker marker) {
+            public View getInfoWindow(@NonNull Marker marker) {
                 return null;
             }
 
             @Override
-            public View getInfoContents(Marker marker) {
-                View view = LayoutInflater.from(requireContext()).inflate(R.layout.map_info_window, null);
+            public View getInfoContents(@NonNull Marker marker) {
+                View view = LayoutInflater.from(requireContext()).inflate(R.layout.map_info_window, (ViewGroup) null);
                 TextView title = view.findViewById(R.id.info_title);
                 TextView snippet = view.findViewById(R.id.info_snippet);
                 title.setText(marker.getTitle());
@@ -357,30 +347,39 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
                 new LandmarkManager.LandmarkFetchCallback() {
                     @Override
                     public void onLandmarksFetched(List<Landmark> fetchedLandmarks) {
-                        if (!isAdded()) return; // Add this check
+                        if (!isAdded()) return; // Prevent UI interaction if fragment is detached
 
-                        if (fetchedLandmarks != null && !fetchedLandmarks.isEmpty()) {
-                            requireActivity().runOnUiThread(() -> {
+                        requireActivity().runOnUiThread(() -> {
+                            if (fetchedLandmarks != null && !fetchedLandmarks.isEmpty()) {
                                 setupLandmarksRecycler(fetchedLandmarks);
-                            });
-                        } else {
-                            requireActivity().runOnUiThread(() -> {
+                            } else {
+                                // Log and display a message if no landmarks are fetched
+                                Log.w(TAG, "No landmarks fetched for this guide.");
                                 Toast.makeText(requireContext(),
-                                        "No landmarks associated with this guide.",
+                                        getString(R.string.no_landmarks_message), // Use string resource
                                         Toast.LENGTH_SHORT).show();
-                            });
-                        }
+                            }
+                        });
                     }
 
                     @Override
                     public void onError(String message) {
-                        if (!isAdded()) return; // Add this check
+                        if (!isAdded()) return; // Prevent further actions if fragment is detached
 
-                        Log.e(TAG, message);
+                        // Log the error message with additional details
+                        if (message != null && !message.isEmpty()) {
+                            Log.e(TAG, "Error fetching landmarks: " + message);
+                        } else {
+                            Log.e(TAG, "Error fetching landmarks: No additional details provided.");
+                        }
+
+                        // Update UI on the main thread
                         requireActivity().runOnUiThread(() -> {
-                            Toast.makeText(requireContext(),
-                                    "Failed to fetch landmarks.",
-                                    Toast.LENGTH_SHORT).show();
+                            String userMessage = message != null && !message.isEmpty()
+                                    ? message // If message is user-friendly, display it
+                                    : getString(R.string.landmarks_fetch_error);
+
+                            Toast.makeText(requireContext(), userMessage, Toast.LENGTH_SHORT).show();
                         });
                     }
                 });
@@ -454,7 +453,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
         super.onResume();
         locationCallback = new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
+            public void onLocationResult(@NonNull LocationResult locationResult) {
                 if (locationResult.getLastLocation() != null && landmarks != null) {
                     proximityManager.checkProximity(locationResult.getLastLocation(), landmarks);
                 }

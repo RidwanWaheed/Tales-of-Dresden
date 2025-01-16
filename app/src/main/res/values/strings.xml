@@ -32,4 +32,7 @@
 
     <string name="photo_description">Full screen photo</string>
 
+    <string name="no_landmarks_message">No landmarks associated with this guide.</string>
+    <string name="landmarks_fetch_error">Failed to fetch landmarks. Please try again.</string>
+
 </resources>
