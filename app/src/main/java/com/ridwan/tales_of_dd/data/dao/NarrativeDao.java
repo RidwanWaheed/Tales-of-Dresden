@@ -52,6 +52,16 @@ public interface NarrativeDao {
     List<Narrative> getNarrativesByCharacterId(int characterId);
 
     /**
+     * Retrieves the narrative text associated with a specific guide (character) and landmark.
+     *
+     * @param characterId The ID of the character (guide).
+     * @param landmarkId  The ID of the landmark.
+     * @return The narrative text, or null if no match is found.
+     */
+    @Query("SELECT narrative_text FROM narratives WHERE character_id = :characterId AND landmark_id = :landmarkId LIMIT 1")
+    String getNarrativeForGuideAndLandmark(int characterId, int landmarkId);
+
+    /**
      * Inserts a single narrative into the database.
      * If a conflict occurs, the existing record will be replaced.
      *
