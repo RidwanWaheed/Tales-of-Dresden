@@ -286,14 +286,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
 
     private void launchPOIDetailActivity(Landmark landmark, float distance) {
         Intent intent = new Intent(requireContext(), POIDetailActivity.class);
-        intent.putExtra("poi", new PointOfInterest(
+
+        // Create a PointOfInterest object with all necessary details
+        PointOfInterest poi = new PointOfInterest(
+                landmark.getId(),
                 landmark.getName(),
                 landmark.getDescription(),
+                landmark.getLatitude(),
+                landmark.getLongitude(),
                 landmark.getImageUrl(),
                 distance,
                 landmark.getDetailedDescription()
-        ));
+        );
+
+        // Put the POI and GuideItem into the Intent
+        intent.putExtra("poi", poi);
         intent.putExtra("guide_item", currentGuideItem);
+
+        // Start the activity
         startActivity(intent);
     }
 

@@ -25,7 +25,7 @@ public class PointOfInterest implements Serializable {
     // New constructor for creating from Landmark
     public PointOfInterest(int id, String name, String description,
                            double latitude, double longitude, String imageUrl,
-                           double distance) {
+                           double distance, String fullDescription) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -33,7 +33,7 @@ public class PointOfInterest implements Serializable {
         this.longitude = longitude;
         this.imageUrl = imageUrl;
         this.distance = distance;
-        this.fullDescription = description; // Using description as fullDescription
+        this.fullDescription = fullDescription; // Using description as fullDescription
     }
 
     // Original getters

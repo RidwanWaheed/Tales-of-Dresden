@@ -107,6 +107,18 @@
       "is_secret": true,
       "reward": "Hidden Map",
       "buffer_radius": 60.0
+    },
+    {
+      "id": 10,
+      "name": "Fritz",
+      "latitude": 51.035833,
+      "longitude": 13.731667,
+      "description": "App test location Dorm",
+      "detailed_description": "For Testing",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Dresden_Germany_Exterior-of-Frauenkirche-04.jpg",
+      "is_secret": false,
+      "reward": null,
+      "buffer_radius": 60.0
     }
 
   ],
@@ -116,7 +128,7 @@
       "name": "King Augustus II the Strong",
       "era": "18th Century",
       "personality": "Art patron, passionate lover, powerful temper",
-      "image_url": "@drawable/augustus_icon.png",
+      "image_url": "https://drive.google.com/uc?export=view&id=1mRgTey9SdftjRwgoo6G34kpJerVG-frL",
       "overview": "Augustus II the Strong, was the ruler of Saxony and Poland in the early 18th century. Renowned for his ambitious vision and patronage of the arts, he began the process of transforming Dresden into a cultural and architectural masterpiece. He was the founder of the first European hard-paste porcelain manufacturer, which was located in Meissen. Known also for his lavish lifestyle and sexual addictions, as the old rumour goes, he could had been father of around 300 children. He died on the 1st of February 1733 in Warsaw, with his last words perfectly capturing the core of his lifestyle - The entirety of my life was a single, never-ending sin. God, have mercy for me."
     },
     {
@@ -124,7 +136,7 @@
       "name": "Erich Honecker",
       "era": "20th Century",
       "personality": "Authoritarian, cold, self-disciplined",
-      "image_url": "@drawable/honecker_icon.png",
+      "image_url": "https://drive.google.com/uc?export=view&id=1dAtVz_wlpLmL234ExT_UOs2tafHNjaJy",
       "overview": "Erich Honecker was a cold and humourless leader of East Germany (DDR) from 1971 to 1989. His era was marked by huge investments, which represented socialist modernism in architecture. If you speak very freely, you can make a lot of mistakes - he once said, which clearly underlines his iron fist attitude to the East German state. Honecker could be considered controversial, as his decisions were to strengthen the inner German border and to apply ruthless policies towards ones who dared to escape from the country under his fist, the DDR."
     }
   ],

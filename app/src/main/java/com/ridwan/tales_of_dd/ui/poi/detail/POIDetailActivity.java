@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,9 +58,13 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
     private Landmark currentLandmark;
     private float currentDistance = Float.MAX_VALUE;  // Track current distance
 
+    private GuideItem guideItem;
+
     // Photo capture
     private String currentPhotoPath;
     private String landmarkName;
+
+    private static final String TAG = "POIDetailActivity"; // Replace YourClassName with the actual class name.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +123,7 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
 
     private void handleIntentData() {
         PointOfInterest poi = (PointOfInterest) getIntent().getSerializableExtra("poi");
-        GuideItem guideItem = (GuideItem) getIntent().getSerializableExtra("guide_item");
+        guideItem = (GuideItem) getIntent().getSerializableExtra("guide_item");
 
         if (poi != null) {
             landmarkName = poi.getName();
@@ -165,8 +170,6 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
         poiTitle.setText(poi.getName() != null ? poi.getName() : "Unknown");
         poiDetailedDescription.setText(poi.getFullDescription() != null ?
                 poi.getFullDescription() : "No detailed description available.");
-        guideComment.setText(poi.getDescription() != null ?
-                poi.getDescription() : "No guide narrative available.");
         poiDistance.setText(String.format(Locale.getDefault(), "%.1f km", poi.getDistance()));
 
         if (poi.getImageUrl() != null && !poi.getImageUrl().isEmpty()) {
@@ -179,6 +182,34 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
         } else {
             poiImage.setImageResource(R.drawable.ic_landmark_placeholder);
         }
+
+// Fetch narrativeText dynamically
+        new Thread(() -> {
+            Log.d(TAG, "Fetching narrative text for guideId: " + guideItem.getId() + " and poiId: " + poi.getId());
+
+            String narrativeText = DatabaseHelper.getNarrativeForGuideAndLandmark(
+                    this,
+                    guideItem.getId(),
+                    poi.getId()
+            );
+
+            if (narrativeText != null) {
+                Log.d(TAG, "Narrative text fetched: " + narrativeText);
+            } else {
+                Log.d(TAG, "Narrative text not found or is null.");
+            }
+
+            // Update the UI on the main thread
+            runOnUiThread(() -> {
+                if (narrativeText != null && !narrativeText.isEmpty()) {
+                    Log.d(TAG, "Updating guideComment with narrative text.");
+                    guideComment.setText(narrativeText); // Set the narrative text
+                } else {
+                    Log.d(TAG, "Setting guideComment to fallback message: 'No guide narrative available.'");
+                    guideComment.setText("No guide narrative available.");
+                }
+            });
+        }).start();
     }
 
     private void populateGuideViews(GuideItem guideItem) {
