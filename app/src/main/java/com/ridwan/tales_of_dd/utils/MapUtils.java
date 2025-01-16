@@ -1,6 +1,7 @@
 package com.ridwan.tales_of_dd.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,7 +28,7 @@ public class MapUtils {
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");
             }
-        } catch (Exception e) {
+        } catch (Resources.NotFoundException e) {
             Log.e(TAG, "Error applying map style.", e);
         }
     }

@@ -7,7 +7,7 @@ import java.io.FileInputStream
  * Defines the project structure, dependencies, and build settings.
  */
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
 }
 
 android {
@@ -29,6 +29,16 @@ android {
         }
         val MAPS_API_KEY: String = localProperties.getProperty("MAPS_API_KEY", "")
         manifestPlaceholders["MAPS_API_KEY"] = MAPS_API_KEY
+
+        // Room schema export configuration - moved inside defaultConfig
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -78,4 +88,6 @@ dependencies {
 
     // JSON parsing
     implementation("com.google.code.gson:gson:2.10.1")
+
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }

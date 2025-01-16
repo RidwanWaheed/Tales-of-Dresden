@@ -24,9 +24,33 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.poi.detail.POIDetailActivity"
             android:exported="false"/>
+
         <activity
+            android:name=".ui.character.detail.GuideDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.photo.PhotoViewerActivity"
+            android:exported="false"
+         />
+
+        <!-- Remove these activities since they're now fragments -->
+        <!-- <activity
             android:name=".ui.map.MapActivity"
             android:launchMode="singleTask"
             android:exported="false"
@@ -39,20 +63,8 @@
             android:name=".ui.about.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.character.detail.GuideDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.guide.GuideActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" /> -->
 
         <provider
             android:name="androidx.core.content.FileProvider"
