@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.data.models.PointOfInterest;
 import com.ridwan.tales_of_dd.ui.guide.GuideItem;
-import com.ridwan.tales_of_dd.ui.map.ProximityManager;
+import com.ridwan.tales_of_dd.utils.ProximityManager;
 import com.ridwan.tales_of_dd.utils.LocationManager;
 import com.ridwan.tales_of_dd.utils.DatabaseHelper;
 
@@ -155,6 +154,32 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
         currentDistance = results[0];  // Store current distance
         boolean isNearLandmark = currentDistance <= ALLOWED_DISTANCE_METERS;
         updateCameraButtonState(isNearLandmark);
+        updateNarrativeState(isNearLandmark);
+    }
+
+    private void updateNarrativeState(boolean isNearLandmark) {
+        runOnUiThread(() -> {
+            if (isNearLandmark) {
+                // If narrative text was previously fetched, show it
+                new Thread(() -> {
+                    String narrativeText = DatabaseHelper.getNarrativeForGuideAndLandmark(
+                            this,
+                            guideItem.getId(),
+                            currentLandmark.getId()
+                    );
+
+                    runOnUiThread(() -> {
+                        if (narrativeText != null && !narrativeText.isEmpty()) {
+                            guideComment.setText(narrativeText);
+                            guideComment.setTextColor(getResources().getColor(R.color.black, null));
+                        }
+                    });
+                }).start();
+            } else {
+                guideComment.setText("Visit this landmark to hear the guide's commentary.");
+                guideComment.setTextColor(getResources().getColor(R.color.black, null));
+            }
+        });
     }
 
     private void updateCameraButtonState(boolean enabled) {
@@ -183,33 +208,9 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
             poiImage.setImageResource(R.drawable.ic_landmark_placeholder);
         }
 
-// Fetch narrativeText dynamically
-        new Thread(() -> {
-            Log.d(TAG, "Fetching narrative text for guideId: " + guideItem.getId() + " and poiId: " + poi.getId());
-
-            String narrativeText = DatabaseHelper.getNarrativeForGuideAndLandmark(
-                    this,
-                    guideItem.getId(),
-                    poi.getId()
-            );
-
-            if (narrativeText != null) {
-                Log.d(TAG, "Narrative text fetched: " + narrativeText);
-            } else {
-                Log.d(TAG, "Narrative text not found or is null.");
-            }
-
-            // Update the UI on the main thread
-            runOnUiThread(() -> {
-                if (narrativeText != null && !narrativeText.isEmpty()) {
-                    Log.d(TAG, "Updating guideComment with narrative text.");
-                    guideComment.setText(narrativeText); // Set the narrative text
-                } else {
-                    Log.d(TAG, "Setting guideComment to fallback message: 'No guide narrative available.'");
-                    guideComment.setText("No guide narrative available.");
-                }
-            });
-        }).start();
+        // Set initial state for guide comment
+        guideComment.setText("Visit this landmark to hear the guide's commentary.");
+        guideComment.setTextColor(getResources().getColor(R.color.black, null));
     }
 
     private void populateGuideViews(GuideItem guideItem) {

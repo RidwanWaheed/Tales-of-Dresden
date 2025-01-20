@@ -1,5 +1,6 @@
 package com.ridwan.tales_of_dd.ui.collection;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,7 @@ public class CollectionFragment extends Fragment {
     private CollectionAdapter adapter;
     private SearchView searchView;
     private List<Collection> collections;
+    private static final int PHOTO_VIEWER_REQUEST = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,12 +57,19 @@ public class CollectionFragment extends Fragment {
 
     private void showFullScreenPhoto(String photoPath, String landmarkName) {
         Intent intent = new Intent(requireContext(), PhotoViewerActivity.class);
-        // or if you're in an activity: new Intent(this, PhotoViewerActivity.class)
-
         intent.putExtra("photo_path", photoPath);
         intent.putExtra("landmark_name", landmarkName);
-        startActivity(intent);
+        startActivityForResult(intent, PHOTO_VIEWER_REQUEST);
         requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PHOTO_VIEWER_REQUEST && resultCode == Activity.RESULT_OK) {
+            // Refresh the collection
+            loadCollectionsFromStorage();
+        }
     }
 
     private void loadCollectionsFromStorage() {

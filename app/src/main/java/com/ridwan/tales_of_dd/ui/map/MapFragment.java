@@ -49,6 +49,7 @@ import com.ridwan.tales_of_dd.utils.DatabaseHelper;
 import com.ridwan.tales_of_dd.utils.LandmarkManager;
 import com.ridwan.tales_of_dd.utils.LocationManager;
 import com.ridwan.tales_of_dd.utils.MapUtils;
+import com.ridwan.tales_of_dd.utils.ProximityManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,6 +202,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
     private void addLandmarkMarker(Landmark landmark) {
         if (googleMap == null || landmark == null) return;
 
+        // Create a custom marker with your gold color
+        float[] hsv = new float[3];
+        int goldColor = getResources().getColor(R.color.gold, null);
+        android.graphics.Color.colorToHSV(goldColor, hsv);
+
         LatLng position = new LatLng(landmark.getLatitude(), landmark.getLongitude());
         String snippet = landmark.getDescription().length() > 100
                 ? landmark.getDescription().substring(0, 97) + "..."
@@ -210,7 +216,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
                 .position(position)
                 .title(landmark.getName())
                 .snippet(snippet)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                .icon(BitmapDescriptorFactory.defaultMarker(hsv[0])));
 
         if (marker != null) {
             marker.setTag(landmark);
