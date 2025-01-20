@@ -1,4 +1,4 @@
-package com.ridwan.tales_of_dd.ui.map;
+package com.ridwan.tales_of_dd.utils;
 
 import android.location.Location;
 
