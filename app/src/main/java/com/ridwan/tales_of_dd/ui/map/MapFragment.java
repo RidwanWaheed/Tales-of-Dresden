@@ -1,10 +1,14 @@
 package com.ridwan.tales_of_dd.ui.map;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +39,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
@@ -58,6 +63,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
 
     private static final String TAG = "MapFragment";
 
+    private Vibrator vibrator;
+
     // UI elements
     private GoogleMap googleMap;
     private RecyclerView landmarksRecycler;
@@ -73,6 +80,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
     // Landmarks and guide info
     private List<Landmark> landmarks;
     private GuideItem currentGuideItem;
+
 
     public static MapFragment newInstance(GuideItem guideItem) {
         MapFragment fragment = new MapFragment();
@@ -95,6 +103,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
 
         initializeViews();
         initializeDependencies();
+
+        // Initialize vibrator
+        vibrator = (Vibrator) requireContext().getSystemService(Context.VIBRATOR_SERVICE);
 
         // Setup ProximityManager for narrative tracking
         proximityManager = new ProximityManager();
@@ -337,14 +348,41 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
     }
 
     @Override
-    public void onNarrativeTriggered(Landmark landmark) {
-        if (isAdded()) {
-            requireActivity().runOnUiThread(() ->
-                    guideText.setText(String.format("%s tells you about %s: %s",
-                            currentGuideItem.getTitle(), landmark.getName(), landmark.getDescription()))
-            );
+    public void onNarrativeTriggered(Landmark landmark, boolean isFirstTrigger) {
+        if (!isAdded() || currentGuideItem == null || landmark == null) return;
+
+        // Handle vibration on main thread if it's a first trigger
+        if (isFirstTrigger) {
+            requireActivity().runOnUiThread(() -> {
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(300);
+                    }
+                }
+            });
         }
+
+        new Thread(() -> {
+            // Query the narrative table for the specific narrative
+            String narrativeSum = DatabaseHelper.getNarrativeSumForGuideAndLandmark(
+                    requireContext(),
+                    currentGuideItem.getId(),
+                    landmark.getId()
+            );
+
+            // Update the UI on the main thread
+            requireActivity().runOnUiThread(() -> {
+                if (narrativeSum != null && !narrativeSum.isEmpty()) {
+                    guideText.setText(narrativeSum); // Set the narrative text
+                } else {
+                    guideText.setText(String.format("No narrative available for %s.", landmark.getName()));
+                }
+            });
+        }).start();
     }
+
 
     private void fetchLandmarksFromDatabase(int characterId) {
         if (!isAdded()) return; // Add this check

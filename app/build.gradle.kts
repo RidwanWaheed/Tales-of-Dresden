@@ -23,12 +23,21 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // Load Google Maps API key from local.properties
+// Load Google Maps API key from local.properties
         val localProperties = Properties().apply {
             load(FileInputStream(rootProject.file("local.properties")))
         }
         val MAPS_API_KEY: String = localProperties.getProperty("MAPS_API_KEY", "")
+
+        // Add BuildConfig field for MAPS_API_KEY
+        buildConfigField("String", "MAPS_API_KEY", "\"${MAPS_API_KEY}\"")
+
+        // Keep existing manifest placeholder
         manifestPlaceholders["MAPS_API_KEY"] = MAPS_API_KEY
+
+        buildFeatures {
+            buildConfig = true // Explicitly enable BuildConfig generation
+        }
 
         // Room schema export configuration - moved inside defaultConfig
         javaCompileOptions {
@@ -90,4 +99,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+
+//    OkHttp dependency
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+
 }
+

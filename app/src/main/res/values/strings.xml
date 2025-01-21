@@ -2,7 +2,8 @@
     <string name="app_name">Tales of DD</string>
     <string name="explore_dresden_title">Explore Dresden with us!</string>
     <string name="dresden_description">Discover Dresden\'s landmarks through historical narratives.</string>
-    <string name="meet_guide_button">Meet your Guide</string>
+    <string name="app_info">Step into Dresden\'s rich history with personalized guides who bring the city\'s landmarks to life. Take photos, collect memories, and uncover stories at each location. Your journey through Dresden\'s cultural heritage starts here.</string>
+    <string name="meet_guide_button">MEET YOUR GUIDE</string>
     <string name="logo_description">Dresden Tour App Logo</string>
     <string name="landmark_image_description">Dresden Landmark</string>
 

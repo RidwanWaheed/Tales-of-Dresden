@@ -24,7 +24,7 @@ public class ProximityManager {
      * Interface for handling narrative triggers.
      */
     public interface NarrativeListener {
-        void onNarrativeTriggered(Landmark landmark);
+        void onNarrativeTriggered(Landmark landmark, boolean isFirstTrigger);
     }
 
     /**
@@ -155,10 +155,11 @@ public class ProximityManager {
      * @param landmark the landmark
      */
     private void triggerNarrative(LandmarkState state, Landmark landmark) {
+        boolean isFirstTrigger = !state.isTriggered; // Check if this is the first trigger
         state.isTriggered = true;
         state.lastTriggerTime = System.currentTimeMillis();
         if (listener != null) {
-            listener.onNarrativeTriggered(landmark);
+            listener.onNarrativeTriggered(landmark, isFirstTrigger);
         }
     }
 

@@ -116,4 +116,23 @@ public class DatabaseHelper {
         }
     }
 
+
+    /**
+     * Retrieves the narrative summary for a specific guide (character) and landmark.
+     *
+     * @param context      the application context
+     * @param characterId  the ID of the guide (character)
+     * @param landmarkId   the ID of the landmark
+     * @return the narrative text, or null if not found
+     */
+    public static String getNarrativeSumForGuideAndLandmark(Context context, int characterId, int landmarkId) {
+        try {
+            AppDatabase db = AppDatabase.getInstance(context);
+            return db.narrativeDao().getNarrativeSumForGuideAndLandmark(characterId, landmarkId);
+        } catch (Exception e) {
+            Log.e(TAG, "Error fetching narrative for guide and landmark", e);
+            return null;
+        }
+    }
+
 }
