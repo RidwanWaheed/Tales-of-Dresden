@@ -142,9 +142,9 @@
   ],
   "landmark_character": [
     { "landmark_id": 1, "character_id": 1 },
-    { "landmark_id": 2, "character_id": 1 },
-    { "landmark_id": 2, "character_id": 2 },
-    { "landmark_id": 3, "character_id": 2 }
+    { "landmark_id": 3, "character_id": 1 },
+    { "landmark_id": 4, "character_id": 2 },
+    { "landmark_id": 6, "character_id": 2 }
   ],
   "narratives": [
     {
@@ -152,98 +152,112 @@
       "character_id": 1,
       "landmark_id": 1,
       "narrative_text": "You know, Louis XIV the king of France? I will never forget my impression when I got past the gate of his main residential complex, the Versailles. So to speak, Zwinger is my answer for the latest trends in royal architecture! All these intricate details, sculptures and wings of the complex, everything underlines the splendor of my legacy as the Elector of Saxony and King of Poland. But not everything is as I remember! You see the eastern part of the complex? It is certainly off, god knows what style it is... In a way, I find it reminiscent of my ancestor's preferences, back from the 16h century! But that is not how we used to build back in my days. I heard that my porcelain collection has been moved here to Zwinger! That indeed surprises me, that this vast richness of my art patronage has been moved here! I thought it would remain in the Japanese Palace forever! My painting collection is also there! So many visitors wander around, who let them approach my property in such a way. Where are the guards, protecting the property from the outsiders? Regarding a more pleasant note, on the palace's facade, you can also find the Polish-Lithuanian coats of arms, as I used to be the king of this enormous country!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "The masterpiece of my reign! Let me fill you into the details..."
     },
     {
       "id": 2,
       "character_id": 2,
       "landmark_id": 1,
       "narrative_text": "That is a true masterpiece of baroque architecture, nevertheless also a reminder of the bourgeois and lavish lifestyle of the old elites. King Augustus II who invested in the erection of this complex surely wouldn't recognize the mid 19th century Sempergalerie, in which vast amounts of cultural heritage are stored and shared for the eyes of our people. As the other significant heritage sites of Dresden, Zwinger also fell to the destructive conflicts, brought on us by the Nazis. Despite sustaining damage in 1945, the art stored inside is mostly original, as it was evacuated before bombs could erase all that heritage. The reconstruction started shortly after Soviets entered the city and was largely successfully completed during the rule of my predecessor, the First Secretery of the Socialist Unity Party of DDR - Walter Ulbricht. The complex got gradually rebuilt throughout 1950s and 1960s, now we can truly admire the fully-rebuilt palace!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "East Germany resurrected this complex, let me show you around..."
     },
     {
       "id": 3,
       "character_id": 1,
       "landmark_id": 2,
       "narrative_text": "This is what I can't recognize! They call it the Semperoper, but why if there was a space for all the concerts in the Zwinger! This masterpiece of my legacy could host up to 2000 spectators, but... it was demolished during so-called Dresden May Uprising in the year 1849? That's a scandal! But that architect, who designed the currently existing building, Gottfried Semper, deserves for a medal! That level of detail intricacy is something I expect from a building, serving such a high purpose! There are over 1300 seats and the main opera hall is grand, that's the place where I would certainly organise a ball, like me and my son used to do in the old building!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "I must admit, this wasn't here back in my times..."
     },
     {
       "id": 4,
       "character_id": 2,
       "landmark_id": 2,
       "narrative_text": "The Semperoper, yet another example of the destruction brought to the city by the consequences of the Nazi rule. Imagine that Richard Wagner gave three world premieres within these walls and Richard Strauss gave nine! And 40 years after the opera had been destroyed by the bombs, I reopened it in person. Despite the frost, on the 13th of February 1985 over 200 000 people gathered to admire this special opening, together with the finest musical talents invited by the DDR to our city. I sat inside the opera house, with the ex-chancellor of West Germany, Helmut Schmidt, who was also impressed by our reconstruction effort. This opera house shall be forever the proof of how does our party care for the culture of its people! But... I also remember that in 1989, there were protests against me, taking place in the front of this opera house. And they even played Beethoven's Fidelio during their gatherings! How dare they!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "Socialism brought back this opera house for its people..."
     },
     {
       "id": 5,
       "character_id": 1,
       "landmark_id": 3,
-      "narrative_text": "The Frauenkirche! Looks like freshly built, although I never lived up to see the fully finished building. My son, Augustus III of Poland, completed this magnificent church back in the year 1743. I'm so proud of him! You see this magnificent dome, decorating the top like a cherry on a cake? George Bähr, the architect of this masterpiece, initially wanted to design the dome as a wooden construction with copper covering, but thanks to my support, we did change the vision! Now, you can admire the intricate stone dome, like the one of Venice's Santa Maria della Salute church! The total height of this church is 91 metres, while from what I have been told, visitors can enjoy an observation deck, 67 metres above the Neumarkt. Go inside and feel the glory of my dynasty!",
-      "audio_url": ""
+      "narrative_text": "The Frauenkirche! Looks like freshly built, although I never lived up to see the fully finished building. Under my son, Augustus III of Poland, this magnificent church had been completed back in the year 1743. I'm so proud of him! You see this magnificent dome, decorating the top like a cherry on a cake? George Bähr, the architect of this masterpiece, initially wanted to design the dome as a wooden construction with copper covering, but thanks to my support, we did change the vision! Now, you can admire the intricate stone dome, like the one of Venice's Santa Maria della Salute church! The total height of this church is 91 metres, while from what I have been told, visitors can enjoy an observation deck, 67 metres above the Neumarkt. Go inside and feel the glory of my dynasty!",
+      "audio_url": "",
+      "narrative_sum": "This masterpiece was completed under the reign of my son..."
     },
     {
       "id": 6,
       "character_id": 2,
       "landmark_id": 3,
       "narrative_text": "What happened here? That was supposed to be a World War II memorial for the generations to come! While I did receive some intel on various groups gathering around the ruins or church organisations planning to rebuilt the building... this is not how it should be! That was the place where people of Dresden used to commemorate their dead relatives, after the bomb raids of 1945. In addition, we did use some of the rubble from this church to pave Brühl Terrace by the Elbe river, so this building must be totally new in a large part! And the area surrounding it does not look like a socialist city should be! During my time, the entire area was a silent reminder of what Nazis brought upon the people, not a capitalistic wonderland of today!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "This is not how it should be here..."
     },
     {
       "id": 7,
       "character_id": 2,
       "landmark_id": 4,
       "narrative_text": "The Kulturpalast is how the DDR cares about its people! My predecessor, Walter Ulbricht, opened it back in the 1960. Since then, the Kulturpalast has been the core of Dresden's cultural life. Can you see a mural on the west side of the building? It is called 'The Path of the Red Flag' and was designed by our talents from the Dresden University of Fine Arts. This magnificent piece of arts commemorates over 120 years of struggle that led to the establishment of socialism in this city. As the text inscription in the mural goes, the liberation of the working class can only be the work of the working class itself. Life will be our program. Despite all this, we are the victor of history! I also used to appear within these walls on various occasions, like back in 1977 at the Opening of the Party Apprenticeship Year.",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "This is the true palace of culture for the working class..."
     },
     {
       "id": 8,
       "character_id": 1,
       "landmark_id": 5,
       "narrative_text": "What happened here? These buildings around, they do look grand, but at the same time... everything is way off! Where is the magnificent Löwenapotheke, which was rebuilt from ashes during my reign? It used to be probably one of the most valuable row houses in this city! And in addition, some of the houses around the market square are just like cubes with windows! That is a disgrace for this city, whoever allowed this should face a very heavy sentence! But at least, the Christmas market is still taking place there, as it used to also during my days. I wonder if they sell anything that reminds the people of my era and its splendor!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "This huge area, looks familiar but also odd..."
     },
     {
       "id": 9,
       "character_id": 2,
       "landmark_id": 5,
       "narrative_text": "That is the prime example of socialist classicism in the city of Dresden! Back in the 1950s, we ordered the expansion of this square and the adherence of its architectural form to the '16 Principles of Urban Planning', released for the German Democratic Republic in the year 1950. The principles stated that the new developments must continue the national heritage. So in fact, the buildings here are heavily influenced by Dresden baroque, being socialist in their content but very local in form. Take a look on for instance Haus Altmarkt, Warenhaus Centrum or Café Prag! That's a high architecture for our working people, unlike under that aristocratic Augustus II, when such developments served only the rich elites!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "These palace-like buildings were designed for the working class..."
     },
     {
       "id": 10,
       "character_id": 1,
       "landmark_id": 6,
       "narrative_text": "Prager Street? I have never heard about it and maybe for the better, this place is a total catastrophe! God have mercy for the one who designed these soulless blocks, that I don't even dare to refer to as buildings. They are gigantic, way above the vast majority of structures from my time, but good Lord, what are they meant to show? The richness of stores by this street is truly remarkable though, with so many clothes, appliances or foods I didn't even dare to dream of! And I have noticed an ice cream place, that sells a flavour named after me - August der Starke! They haven't asked me about my permission to use my name for advertising, but if it is good... I think I'll spare whoever did that!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "I don't even know if I could call these structures as buildings..."
     },
     {
       "id": 11,
       "character_id": 2,
       "landmark_id": 6,
       "narrative_text": "That is the grandest street of Dresden, the Prager Street! The old, bourgeois area that used to be located here has been totally destroyed, clearing the space for this incredible signature development of modernity! The so-called Prager Zeile, located right by the street, is one of the longest residential units in all of Germany, at whopping 240 metres of length! The Interhotel 'Newa' as well as the 'Rundkino' were built under my reign, showing how did I use to care about the people of DDR! Despite the socialist effort put in this space, I still see capitalistic contamination dominating the area, just like it did back in the 19th century! And some brands come from the imperialistic US! That is a scandal!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "The spirit of modernity, a gift of the DDR for the people of Dresden..."
     },
     {
       "id": 12,
       "character_id": 2,
       "landmark_id": 7,
       "narrative_text": "This is an atrocity! I still remember that day, in the year 1971, when this engineering marvel was opened! With the total span of 375 metres, width of 32 metres, that used to be the longest-spanning prestressed concrete bridge in the entire DDR! But right now it is collapsed... anyone who is guilty of this neglection should be brought to justice!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "What happened to this wonder of engineering..."
     },
     {
       "id": 13,
       "character_id": 1,
       "landmark_id": 8,
       "narrative_text": "I almost lived to see the statue in its full glory, but sadly, it took so long to complete. But here it is, a majestic memorial to the splendor of my age, which brought prosperity upon Dresden! Initially, I wanted it to be on display right in front of the Zwinger Palace, but I didn't want to leave one of my largest achievements, the Innere Neustadt, without some reminder of my glory. Here I'm depicted as a Roman Caesar, riding towards the north-east, the direction of the Polish-Lithuanian Commonwealth! Since I also used to be their king, the statue serves as a way of greeting those, who come from this gigantic country!",
-      "audio_url": ""
+      "audio_url": "",
+      "narrative_sum": "This statue reflects the light of my era..."
     },
     {
       "id": 14,
       "character_id": 1,
       "landmark_id": 9,
-      "narrative_text": "That is the masterpiece of my son, Augustus III! I'm so proud of him that he managed to erect such a wonder of architecture. This church is also the place where my will had been eternally fulfilled, as even though I was buried in the Cathedral of Cracow, my heart has been placed exactly in this church, here in Dresden.",
-      "audio_url": ""
+      "narrative_text": "That is the masterpiece of my son, Augustus III of Poland! I'm so proud of him that he managed to erect such a wonder of architecture. This church is also the place where my will had been eternally fulfilled, as even though I was buried in the Cathedral of Cracow, my heart has been placed exactly in this church, here in Dresden.",
+      "audio_url": "",
+      "narrative_sum": "This church is why I'm proud of my son..."
     }
 
   ]
