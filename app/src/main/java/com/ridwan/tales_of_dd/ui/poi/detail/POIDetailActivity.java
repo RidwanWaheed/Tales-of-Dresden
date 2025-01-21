@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -20,7 +21,9 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.ridwan.tales_of_dd.HomeActivity;
 import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
 import com.ridwan.tales_of_dd.data.models.PointOfInterest;
@@ -112,6 +115,9 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
         backButton.setOnClickListener(v -> finish());
         cameraButton.setOnClickListener(v -> dispatchTakePictureIntent());
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+        MaterialButton visitButton = findViewById(R.id.visit_button);
+        visitButton.setOnClickListener(v -> navigateToLandmark());
     }
 
     @Override
@@ -187,6 +193,34 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
             cameraButton.setEnabled(enabled);
             cameraButton.setAlpha(enabled ? 1.0f : 0.5f);
         });
+    }
+
+    private void navigateToLandmark() {
+        if (currentLandmark != null) {
+            // Create a dialog to let user choose navigation method
+            new AlertDialog.Builder(this)
+                    .setTitle("Choose Navigation Method")
+                    .setItems(new String[]{"Open in Google Maps"}, (dialog, which) -> {
+                                openInGoogleMaps();
+                    })
+                    .show();
+        }
+    }
+
+    private void openInGoogleMaps() {
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" +
+                currentLandmark.getLatitude() + "," +
+                currentLandmark.getLongitude() +
+                "&mode=w"); // 'w' for walking directions
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(this, "Google Maps app is not installed",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     // ------------------------ UI Population Methods ------------------------

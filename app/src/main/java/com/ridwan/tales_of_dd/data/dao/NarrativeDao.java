@@ -62,6 +62,16 @@ public interface NarrativeDao {
     String getNarrativeForGuideAndLandmark(int characterId, int landmarkId);
 
     /**
+     * Retrieves the narrative summary associated with a specific guide (character) and landmark.
+     *
+     * @param characterId The ID of the character (guide).
+     * @param landmarkId  The ID of the landmark.
+     * @return The narrative summary, or null if no match is found.
+     */
+    @Query("SELECT narrative_sum FROM narratives WHERE character_id = :characterId AND landmark_id = :landmarkId LIMIT 1")
+    String getNarrativeSumForGuideAndLandmark(int characterId, int landmarkId);
+
+    /**
      * Inserts a single narrative into the database.
      * If a conflict occurs, the existing record will be replaced.
      *

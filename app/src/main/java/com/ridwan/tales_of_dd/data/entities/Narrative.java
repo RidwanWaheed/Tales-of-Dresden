@@ -49,6 +49,10 @@ public class Narrative {
     @SerializedName("narrative_text")
     public String narrativeText;
 
+    @ColumnInfo(name = "narrative_sum")
+    @SerializedName("narrative_sum")
+    public String narrativeSum;
+
     /** URL to the audio version of the narrative */
     @ColumnInfo(name = "audio_url")
     @SerializedName("audio_url")

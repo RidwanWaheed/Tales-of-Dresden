@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ridwan.tales_of_dd.R;
 import com.ridwan.tales_of_dd.data.entities.Landmark;
@@ -73,6 +74,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
     // Landmarks and guide info
     private List<Landmark> landmarks;
     private GuideItem currentGuideItem;
+
+    private Polyline currentRoute;
 
     public static MapFragment newInstance(GuideItem guideItem) {
         MapFragment fragment = new MapFragment();
@@ -338,13 +341,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Proximi
 
     @Override
     public void onNarrativeTriggered(Landmark landmark) {
-        if (isAdded()) {
-            requireActivity().runOnUiThread(() ->
-                    guideText.setText(String.format("%s tells you about %s: %s",
-                            currentGuideItem.getTitle(), landmark.getName(), landmark.getDescription()))
+        if (!isAdded() || currentGuideItem == null || landmark == null) return;
+
+        new Thread(() -> {
+            // Query the narrative table for the specific narrative
+            String narrativeSum = DatabaseHelper.getNarrativeSumForGuideAndLandmark(
+                    requireContext(),
+                    currentGuideItem.getId(),
+                    landmark.getId()
             );
-        }
+
+            // Update the UI on the main thread
+            requireActivity().runOnUiThread(() -> {
+                if (narrativeSum != null && !narrativeSum.isEmpty()) {
+                    guideText.setText(narrativeSum); // Set the narrative text
+                } else {
+                    guideText.setText(String.format("No narrative available for %s.", landmark.getName()));
+                }
+            });
+        }).start();
     }
+
 
     private void fetchLandmarksFromDatabase(int characterId) {
         if (!isAdded()) return; // Add this check
