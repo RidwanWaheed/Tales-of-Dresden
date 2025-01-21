@@ -197,13 +197,7 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
 
     private void navigateToLandmark() {
         if (currentLandmark != null) {
-            // Create a dialog to let user choose navigation method
-            new AlertDialog.Builder(this)
-                    .setTitle("Choose Navigation Method")
-                    .setItems(new String[]{"Open in Google Maps"}, (dialog, which) -> {
-                                openInGoogleMaps();
-                    })
-                    .show();
+            openInGoogleMaps();
         }
     }
 
@@ -329,8 +323,9 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
         }
     }
 
+
     @Override
-    public void onNarrativeTriggered(Landmark landmark) {
-        // Implement if needed
+    public void onNarrativeTriggered(Landmark landmark, boolean isFirstTrigger) {
+
     }
 }
