@@ -3,8 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#FFD700</color>
+    <color name="gold_dark">#a68c00</color>
+    <color name="dark_gray">#FF2A2A2A</color>
+    <color name="gray">#666666</color>
 
-    <color name="bottom_nav_background">#999999</color>
     <color name="bottom_nav_icon_color">@color/white</color>
     <color name="bottom_nav_text_color">@color/white</color>
 
@@ -12,5 +14,11 @@
 
     <color name="card_background">#333333</color>
 
+    <color name="card_dark_background">#1a1a1a</color>
+
+
+
     <color name="blue">#2196F3</color>
+
+    <color name="ripple_effect">#80FFFFFF</color>
 </resources>
