@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#333333">
+    android:background="@color/black">
 
     <!-- Back Button -->
     <ImageButton
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            >
 
             <!-- Title -->
             <TextView
@@ -50,8 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textColor="@color/gold"
+                android:textStyle="bold"
+                android:paddingTop="24dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"/>
 
             <!-- Brief Introduction -->
             <TextView
@@ -60,47 +63,70 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="#CCCCCC"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:paddingBottom="24dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                />
 
-            <!-- Overview Title -->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Overview"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:background="@drawable/rounded_top_background_darker"
+                >
 
-            <!-- Overview Content -->
-            <TextView
-                android:id="@+id/overview_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="#CCCCCC"
-                android:textSize="16sp"/>
+                <!-- Overview Title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Overview"
+                    android:textColor="@color/gold"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="24dp"
+                    />
 
-            <!-- My Landmarks Title -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="My landmarks"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
+                <!-- Overview Content -->
+                <TextView
+                    android:id="@+id/overview_text"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#CCCCCC"
+                    android:textSize="16sp"
+                    android:paddingLeft="24dp"/>
 
-            <!-- Landmarks Grid -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/landmarks_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                tools:listitem="@layout/landmark_item" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/rounded_top_background_black"
+                    android:padding="24dp">
+                    <!-- My Landmarks Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="My landmarks"
+                        android:textColor="@color/gold"
+                        android:textSize="24sp"
+                        android:textStyle="bold"/>
+
+                    <!-- Landmarks Grid -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/landmarks_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="16dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/landmark_item" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

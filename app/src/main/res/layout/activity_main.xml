@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-
     <!-- Logo -->
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/rounded_logo"
         android:clipToOutline="true"
         android:contentDescription="@string/logo_description"
@@ -18,67 +18,88 @@
         android:src="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/large_margin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Title -->
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/explore_dresden_title"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/gold"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintWidth_max="wrap" />
+        app:layout_constraintTop_toBottomOf="@id/logo" />
 
     <!-- Subtitle -->
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif"
-        android:paddingHorizontal="@dimen/large_margin"
+        android:lineSpacingExtra="4dp"
         android:text="@string/dresden_description"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/subtitle_text_size"
+        android:textColor="@color/gold_dark"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintWidth_max="wrap" />
+        app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <!-- Circular Image -->
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/landmarkImage"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="@dimen/large_margin"
-        android:contentDescription="@string/landmark_image_description"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dresden_image"
+    <!-- Additional Info -->
+    <TextView
+        android:id="@+id/info_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-light"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/app_info"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/subtitle" />
 
+    <!-- Circular Image -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/landmarkImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="32dp"
+        android:contentDescription="@string/landmark_image_description"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dresden_image"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toTopOf="@id/meetGuideButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_text"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="24dp"/>
+
     <!-- Meet Guide Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/meetGuideButton"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="70dp"
-        android:layout_marginTop="@dimen/extra_large_margin"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="48dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/meet_guide_button"
         android:textColor="@color/black"
         app:backgroundTint="@color/gold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landmarkImage" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
