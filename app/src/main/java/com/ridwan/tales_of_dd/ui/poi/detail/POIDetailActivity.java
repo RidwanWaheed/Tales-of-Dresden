@@ -66,7 +66,7 @@ public class POIDetailActivity extends AppCompatActivity implements ProximityMan
     private String currentPhotoPath;
     private String landmarkName;
 
-    private static final String TAG = "POIDetailActivity"; // Replace YourClassName with the actual class name.
+    private static final String TAG = "POIDetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
