@@ -54,4 +54,3 @@ app/
 ## Acknowledgments
 Developed as part of the Mobile Cartography course at Technical University of Dresden, under the International Master's in Cartography program.
 
-Let me know if you'd like me to add or modify any sections!
